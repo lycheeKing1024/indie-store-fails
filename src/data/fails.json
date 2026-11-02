@@ -1,8 +1,75 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-30",
-  "note": "Daily-scrape-ready seed. Replace/append via routines. All entries marked demo.",
+  "generatedAt": "2026-11-01",
+  "note": "Seed demos plus verified public fails appended 2026-11-01. demo=false = sourced.",
   "fails": [
+    {
+      "id": "ads-legacy-url-404",
+      "demo": false,
+      "category": "ads",
+      "titleZh": "迁站后旧 Shopify 链接全是 404",
+      "titleEn": "Legacy Shopify URLs still 404 after migration",
+      "failZh": "旧 Shopify/Etsy 链接在广告与社媒仍被点击，155 条路径进 404；GA 显示 0 购买，实际 Stripe 有约 $249 成单，广告在优化空信号。",
+      "failEn": "Old Shopify/Etsy links still drew clicks—155 paths hit 404. GA showed 0 purchases while Stripe logged a ~$249 order; ads optimized on empty signals.",
+      "fixZh": "做完整 301 重定向图并保留路径转发；核对购买事件与支付后台一致后再放大广告。",
+      "fixEn": "Ship a full 301 redirect map (preserve path at the registrar); reconcile purchase events vs the payment dashboard before scaling ads.",
+      "platforms": [
+        "Shopify",
+        "Google Ads"
+      ],
+      "severity": "high",
+      "date": "2026-10-25",
+      "tags": [
+        "redirects",
+        "analytics",
+        "migration"
+      ]
+    },
+    {
+      "id": "apps-script-tag-freeze",
+      "demo": false,
+      "category": "apps",
+      "titleZh": "Script Tag 冻结后重装 App 静默丢追踪",
+      "titleEn": "Script Tag freeze: reinstall silently kills tracking",
+      "failZh": "2026-10-01 起无法新建/更新 Script Tag；重装仍靠 Script Tag 的 App 后像素不回写，店面看似正常，广告侧转化归零。",
+      "failEn": "Since 2026-10-01 Shopify blocks creating/updating Script Tags. Reinstalling a script-tag app looks fine but events never return—tracking dies silently.",
+      "fixZh": "审计 scriptTags；迁到 Web Pixels / Theme App Embed；大促前勿重装未迁移的追踪 App。",
+      "fixEn": "Audit scriptTags; migrate to Web Pixels / theme app embeds; do not reinstall unmigrated tracking apps before peak sales.",
+      "platforms": [
+        "Shopify",
+        "Meta",
+        "GA4"
+      ],
+      "severity": "high",
+      "date": "2026-10-15",
+      "tags": [
+        "web-pixels",
+        "tracking",
+        "deprecation"
+      ]
+    },
+    {
+      "id": "apps-upsell-checkout-hijack",
+      "demo": false,
+      "category": "apps",
+      "titleZh": "加购 App 被注入脚本劫持结账跳转",
+      "titleEn": "Upsell app script injected → checkout redirect",
+      "failZh": "2026-10-13 Selleasy 遭外部攻击，恶意脚本注入店面，部分买家结账被重定向到外部站。",
+      "failEn": "On 2026-10-13 Selleasy was attacked; a malicious script redirected some shoppers away at checkout.",
+      "fixZh": "异常跳转立刻关闭 App Embed；核查结账仍在自有域名；优先选用可快速关停注入的 App，并跟进官方清理通知。",
+      "fixEn": "Disable the app embed on odd redirects; verify checkout stays on your domain; prefer apps whose inject path can be killed fast; follow vendor cleanup notices.",
+      "platforms": [
+        "Shopify",
+        "Selleasy"
+      ],
+      "severity": "high",
+      "date": "2026-10-13",
+      "tags": [
+        "security",
+        "upsell",
+        "checkout"
+      ]
+    },
     {
       "id": "chk-guest-friction",
       "demo": true,
@@ -13,10 +80,15 @@
       "failEn": "Checkout required signup first; mobile bounce spiked.",
       "fixZh": "开启访客结账；注册放到下单后。",
       "fixEn": "Enable guest checkout; defer signup until after purchase.",
-      "platforms": ["Shopify"],
+      "platforms": [
+        "Shopify"
+      ],
       "severity": "high",
       "date": "2026-10-28",
-      "tags": ["conversion", "mobile"]
+      "tags": [
+        "conversion",
+        "mobile"
+      ]
     },
     {
       "id": "chk-shipping-surprise",
@@ -28,10 +100,15 @@
       "failEn": "PDP said free shipping; checkout added $12.",
       "fixZh": "在购物车/商品页预估运费；门槛写清楚。",
       "fixEn": "Show shipping estimator on cart/PDP; clarify thresholds.",
-      "platforms": ["Shopify"],
+      "platforms": [
+        "Shopify"
+      ],
       "severity": "high",
       "date": "2026-10-27",
-      "tags": ["trust", "shipping"]
+      "tags": [
+        "trust",
+        "shipping"
+      ]
     },
     {
       "id": "ads-pixel-dup",
@@ -43,10 +120,16 @@
       "failEn": "Theme + app both fired Purchase; ROAS looked great then crashed.",
       "fixZh": "只留一条标准事件链路；用 Pixel Helper 验一次。",
       "fixEn": "Keep one event path; verify with Pixel Helper.",
-      "platforms": ["Shopify", "Meta"],
+      "platforms": [
+        "Shopify",
+        "Meta"
+      ],
       "severity": "high",
       "date": "2026-10-26",
-      "tags": ["meta", "tracking"]
+      "tags": [
+        "meta",
+        "tracking"
+      ]
     },
     {
       "id": "ads-broad-no-creative",
@@ -58,10 +141,16 @@
       "failEn": "Learning budget burned; CTR under 0.6%.",
       "fixZh": "先做 3–5 条短视频/UGC 测款，再放大。",
       "fixEn": "Test 3–5 short video/UGC creatives before scaling.",
-      "platforms": ["Meta", "TikTok"],
+      "platforms": [
+        "Meta",
+        "TikTok"
+      ],
       "severity": "medium",
       "date": "2026-10-25",
-      "tags": ["creative", "testing"]
+      "tags": [
+        "creative",
+        "testing"
+      ]
     },
     {
       "id": "ship-zone-mismatch",
@@ -73,10 +162,15 @@
       "failEn": "AK/HI orders accepted but not shippable.",
       "fixZh": "按承运商可达区配置 zone；不可达州禁用。",
       "fixEn": "Align zones with carrier reach; block unreachable regions.",
-      "platforms": ["Shopify"],
+      "platforms": [
+        "Shopify"
+      ],
       "severity": "medium",
       "date": "2026-10-24",
-      "tags": ["zones", "ops"]
+      "tags": [
+        "zones",
+        "ops"
+      ]
     },
     {
       "id": "ship-hs-code",
@@ -88,10 +182,16 @@
       "failEn": "Invoices said “gift”; repeated customs delays.",
       "fixZh": "SKU 维护英文品名 + HS；禁写 gift/sample。",
       "fixEn": "Maintain EN description + HS per SKU; never gift/sample.",
-      "platforms": ["Shopify", "YunExpress"],
+      "platforms": [
+        "Shopify",
+        "YunExpress"
+      ],
       "severity": "high",
       "date": "2026-10-23",
-      "tags": ["customs", "cn-origin"]
+      "tags": [
+        "customs",
+        "cn-origin"
+      ]
     },
     {
       "id": "pay-paypal-hold",
@@ -103,10 +203,16 @@
       "failEn": "Early large order triggered hold; cash for fulfillment froze.",
       "fixZh": "提升店铺信息完整度；大单先用卡支付分流；备第二收款通道。",
       "fixEn": "Complete business profile; route big orders to cards; add backup payout.",
-      "platforms": ["PayPal", "Shopify"],
+      "platforms": [
+        "PayPal",
+        "Shopify"
+      ],
       "severity": "high",
       "date": "2026-10-22",
-      "tags": ["risk", "cashflow"]
+      "tags": [
+        "risk",
+        "cashflow"
+      ]
     },
     {
       "id": "pay-currency",
@@ -118,10 +224,16 @@
       "failEn": "Storefront EUR but settlement USD; reconciliation hell.",
       "fixZh": "明确 presentment vs settlement；报表按结算币汇总。",
       "fixEn": "Clarify presentment vs settlement; report in settlement FX.",
-      "platforms": ["Shopify Payments", "Stripe"],
+      "platforms": [
+        "Shopify Payments",
+        "Stripe"
+      ],
       "severity": "medium",
       "date": "2026-10-21",
-      "tags": ["fx", "ops"]
+      "tags": [
+        "fx",
+        "ops"
+      ]
     },
     {
       "id": "apps-speed",
@@ -133,10 +245,15 @@
       "failEn": "Popups, reviews, pixels, upsells — LCP collapsed.",
       "fixZh": "审计 App；非关键延迟加载；合并像素。",
       "fixEn": "Audit apps; defer non-critical; consolidate pixels.",
-      "platforms": ["Shopify"],
+      "platforms": [
+        "Shopify"
+      ],
       "severity": "high",
       "date": "2026-10-20",
-      "tags": ["performance", "cro"]
+      "tags": [
+        "performance",
+        "cro"
+      ]
     },
     {
       "id": "apps-theme-conflict",
@@ -148,10 +265,15 @@
       "failEn": "Theme upgrade removed ATC button.",
       "fixZh": "改动走 Theme App Extension；升级前预览副本。",
       "fixEn": "Prefer Theme App Extensions; preview a copy before upgrade.",
-      "platforms": ["Shopify"],
+      "platforms": [
+        "Shopify"
+      ],
       "severity": "medium",
       "date": "2026-10-19",
-      "tags": ["theme", "maintainability"]
+      "tags": [
+        "theme",
+        "maintainability"
+      ]
     },
     {
       "id": "chk-cod-sea",
@@ -163,10 +285,16 @@
       "failEn": "Ads optimized on COD orders; delivery success only 55%.",
       "fixZh": "用签收/回款做核心指标；高风险地区预付优先。",
       "fixEn": "Optimize on delivered/paid; prefer prepaid in high-risk areas.",
-      "platforms": ["Shopify", "Shopee"],
+      "platforms": [
+        "Shopify",
+        "Shopee"
+      ],
       "severity": "high",
       "date": "2026-10-18",
-      "tags": ["cod", "sea"]
+      "tags": [
+        "cod",
+        "sea"
+      ]
     },
     {
       "id": "ads-utm-lost",
@@ -178,10 +306,16 @@
       "failEn": "After short-link redirects, GA4 showed all direct.",
       "fixZh": "保留 query；用服务器或主题确保 UTM 透传。",
       "fixEn": "Preserve query strings; ensure UTM passthrough in theme/server.",
-      "platforms": ["Shopify", "GA4"],
+      "platforms": [
+        "Shopify",
+        "GA4"
+      ],
       "severity": "medium",
       "date": "2026-10-17",
-      "tags": ["analytics", "utm"]
+      "tags": [
+        "analytics",
+        "utm"
+      ]
     },
     {
       "id": "ship-return-policy",
@@ -193,10 +327,15 @@
       "failEn": "Promised free 30-day returns; reverse logistics > AOV.",
       "fixZh": "跨境写清买家承担退运或本地退货仓。",
       "fixEn": "State buyer-paid returns or local return hub for cross-border.",
-      "platforms": ["Shopify"],
+      "platforms": [
+        "Shopify"
+      ],
       "severity": "medium",
       "date": "2026-10-16",
-      "tags": ["returns", "policy"]
+      "tags": [
+        "returns",
+        "policy"
+      ]
     },
     {
       "id": "pay-3ds",
@@ -208,10 +347,16 @@
       "failEn": "PSD2-related disputes rose; margin eaten.",
       "fixZh": "对欧区开启 3DS/SCA；高风险交易加强验证。",
       "fixEn": "Enable 3DS/SCA for EU; step-up high-risk txs.",
-      "platforms": ["Stripe", "Shopify Payments"],
+      "platforms": [
+        "Stripe",
+        "Shopify Payments"
+      ],
       "severity": "high",
       "date": "2026-10-15",
-      "tags": ["eu", "chargeback"]
+      "tags": [
+        "eu",
+        "chargeback"
+      ]
     },
     {
       "id": "apps-subscription-bleed",
@@ -223,10 +368,15 @@
       "failEn": "Month-end bill +$200 from forgotten trials.",
       "fixZh": "日历提醒试用结束；不用即卸；季度清一次账单。",
       "fixEn": "Calendar trial ends; uninstall unused; quarterly bill audit.",
-      "platforms": ["Shopify"],
+      "platforms": [
+        "Shopify"
+      ],
       "severity": "low",
       "date": "2026-10-14",
-      "tags": ["cost", "ops"]
+      "tags": [
+        "cost",
+        "ops"
+      ]
     }
   ]
 }

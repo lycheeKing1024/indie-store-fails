@@ -1,8 +1,73 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-01",
-  "note": "Seed demos plus verified public fails appended 2026-11-01. demo=false = sourced.",
+  "generatedAt": "2026-11-03",
+  "note": "Seed demos plus verified public fails appended 2026-11-01 and 2026-11-03. demo=false = sourced.",
   "fails": [
+    {
+      "id": "pay-fraud-auto-fulfill",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "风控未标高风险，自动履约亏光货款",
+      "titleEn": "Fraud unmarked + auto-fulfill → $3K loss",
+      "failZh": "开启自动处理且依赖「高风险不处理」；同一地址、不同姓名邮箱连下同款 10 件，Shopify 全标正常。代发已履约后遭拒付全败，欠平台约 $3,013。",
+      "failEn": "Auto-process with “skip high-risk” on; flood of 10× same SKU to one Miami address under different names/emails—all marked fine. Dropship fulfilled; every chargeback lost; owed ~$3,013.",
+      "fixZh": "关掉自动履约；对同址多单/重复 SKU 人工审核；叠加 3DS 与第三方风控，勿只信平台欺诈分。",
+      "fixEn": "Disable auto-fulfill; manually hold same-address / repeat-SKU bursts; add 3DS + a fraud tool beyond Shopify’s score alone.",
+      "platforms": [
+        "Shopify"
+      ],
+      "severity": "high",
+      "date": "2026-03-04",
+      "tags": [
+        "fraud",
+        "chargeback",
+        "autofulfill"
+      ]
+    },
+    {
+      "id": "pay-cancel-trigger-reserve",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "新店应买家取消一单，触发 10% 滚动保证金",
+      "titleEn": "One customer cancel → 10% reserve for 120 days",
+      "failZh": "开店约 30 天、0 拒付、约 115 单；应买家请求取消未发货订单后 24h 内打款被冻。补齐发票与库存照后仍被加 10% 保证金 120 天，Q4 预估锁约 $50k。",
+      "failEn": "30-day store, 0 chargebacks, ~115 orders; refunded one unfulfilled cancel at buyer request. Within 24h payouts held; after docs, 10% reserve for 120 days (~$50k locked through Q4).",
+      "fixZh": "新主体备足现金流与备用收款通道；保留供应商发票/库存照；高风险标单勿轻易履约。",
+      "fixEn": "Keep cash buffer + backup gateway for new entities; archive supplier invoices/inventory photos; don’t fulfill high-risk-flagged orders lightly.",
+      "platforms": [
+        "Shopify Payments",
+        "Airwallex"
+      ],
+      "severity": "high",
+      "date": "2026-09-09",
+      "tags": [
+        "payout-hold",
+        "reserve",
+        "cashflow"
+      ]
+    },
+    {
+      "id": "apps-dev-preview-data-loss",
+      "demo": false,
+      "category": "apps",
+      "titleZh": "Developer Preview 误导「可保留 2 年」致店铺不可恢复",
+      "titleEn": "Dev Preview UI said 2-year restore—store gone",
+      "failZh": "Partner Developer Preview 建好准上线店后取消；后台写「信息保留 2 年可联系恢复」。多轮客服后承认文案错误且 Preview 店无法恢复，资产与 $500+ 成本归零。",
+      "failEn": "Built a production-ready Partner Developer Preview store, then cancelled. Admin said data kept 2 years for reactivation; after days of support, admitted the UI was wrong—Preview stores unrestorable; $500+ assets lost.",
+      "fixZh": "Preview 当易失环境；关键主题/素材/目录独立备份导出；切付费计划前先导出，勿信后台保留承诺。",
+      "fixEn": "Treat Preview as volatile; back up themes/assets/catalogs off-platform; export before plan switches—don’t trust the 2-year UI copy.",
+      "platforms": [
+        "Shopify",
+        "Shopify Partners"
+      ],
+      "severity": "high",
+      "date": "2026-03-01",
+      "tags": [
+        "developer-preview",
+        "backup",
+        "partners"
+      ]
+    },
     {
       "id": "ads-legacy-url-404",
       "demo": false,

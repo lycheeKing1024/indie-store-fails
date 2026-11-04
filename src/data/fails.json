@@ -1,8 +1,79 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-03",
-  "note": "Seed demos plus verified public fails appended 2026-11-01 and 2026-11-03. demo=false = sourced.",
+  "generatedAt": "2026-11-04",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, and 2026-11-04. demo=false = sourced.",
   "fails": [
+    {
+      "id": "ads-meta-on-device-cv",
+      "demo": false,
+      "category": "ads",
+      "titleZh": "Meta 默认开「设备端转化」虚高 ROAS",
+      "titleEn": "Meta on-device conversions inflate reported ROAS",
+      "failZh": "2026-11-12 起「Measure conversions on customer devices」对合格 Pixel 默认开启；Ads Manager 购买数可上涨而 Shopify 实收不变，大促前易误判放量。",
+      "failEn": "From 2026-11-12 “Measure conversions on customer devices” defaults on for eligible Pixels. Ads Manager purchases can rise while Shopify paid orders stay flat—easy to over-scale into BFCM.",
+      "fixZh": "Events Manager → Pixel → Settings 核对并按需关闭；导出 Meta 归因购买与 Shopify 已付订单按日对照；放量前以店铺实收为准。",
+      "fixEn": "Check/opt out per Pixel in Events Manager → Settings; export Meta-attributed purchases vs Shopify paid orders by day; scale only on store revenue, not Ads Manager alone.",
+      "platforms": [
+        "Meta",
+        "Shopify"
+      ],
+      "severity": "high",
+      "date": "2026-11-12",
+      "tags": [
+        "meta",
+        "pixel",
+        "attribution",
+        "bfcm"
+      ]
+    },
+    {
+      "id": "pay-sp-low-cb-bfcm-freeze",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "拒付率 <1% 仍被关 SP，Q4 货款冻结",
+      "titleEn": "SP disabled at <1% CB—Q4 funds frozen",
+      "failZh": "Plus 店 10 月约 $115K、仪表盘拒付 0.59%，仍以「financial risk」给 3 天通知关闭 Shopify Payments，并冻约 $35,765 至 2027-03；另有伙伴店 30 天约 $130K、0.58% 被关。卡支付临黑五断流。",
+      "failEn": "Plus store ~$115K in Oct at 0.59% CB got a 3-day “financial risk” SP disable and ~$35,765 held until 2027-03; another partner store (~$130K/30d, 0.58% CB) hit the same. Card checkout dies right before BFCM.",
+      "fixZh": "勿单押 Shopify Payments：备第二收款通道并提前测通；留供应商发票/物流轨迹备申诉；现金流按最长冻结期（可达数月）预留。",
+      "fixEn": "Don’t single-home on Shopify Payments—stand up and test a backup gateway; archive invoices/tracking for appeals; cash-plan for multi-month holds.",
+      "platforms": [
+        "Shopify Payments",
+        "Shopify Plus"
+      ],
+      "severity": "high",
+      "date": "2026-11-02",
+      "tags": [
+        "payout-hold",
+        "shopify-payments",
+        "bfcm",
+        "cashflow"
+      ]
+    },
+    {
+      "id": "apps-hulkapps-config-hijack",
+      "demo": false,
+      "category": "apps",
+      "titleZh": "App 配置 API 注入假结账劫持刷卡",
+      "titleEn": "App config API injected fake-checkout skimmer",
+      "failZh": "2026-10-10 起 Hulk Product Options（及 Swym/Selleasy 等同型）从厂商配置 API 的 custom_js 下发恶意脚本；点 Checkout 先跳假页盗卡再回真结账，订单仍成功故后台难察觉。同会话只跳一次，复测常「正常」。",
+      "failEn": "From 2026-10-10 Hulk Product Options (and Swym/Selleasy peers) served malware via vendor config custom_js. Checkout click → fake page steals card → real checkout; orders still succeed so admin looks fine. Once-per-session flag makes retests look clean.",
+      "fixZh": "无痕窗口多次点结账，确认地址栏仍在自有域；查 sessionStorage 是否有 __ctf_ 键；清空各 App「自定义 JS/HTML」；关停可疑 App Embed 并轮换密码/开 2FA。",
+      "fixEn": "Retest Checkout in fresh private windows—stay on your domain; look for __ctf_ sessionStorage keys; purge custom JS/HTML in app settings; disable suspicious embeds; rotate passwords + enable 2FA.",
+      "platforms": [
+        "Shopify",
+        "HulkApps",
+        "Swym",
+        "Selleasy"
+      ],
+      "severity": "high",
+      "date": "2026-10-10",
+      "tags": [
+        "security",
+        "checkout",
+        "supply-chain",
+        "skimmer"
+      ]
+    },
     {
       "id": "pay-fraud-auto-fulfill",
       "demo": false,

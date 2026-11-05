@@ -1,8 +1,80 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-04",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, and 2026-11-04. demo=false = sourced.",
+  "generatedAt": "2026-11-05",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, and 2026-11-05 (leave-store link protect, Markets DDP/USPS gap, Thank You scripts→Meta gap). demo=false = sourced.",
   "fails": [
+    {
+      "id": "chk-leave-store-link-protect",
+      "demo": false,
+      "category": "checkout",
+      "titleZh": "离店确认拦合法外链",
+      "titleEn": "Leave-store prompt hits legit outbound links",
+      "failZh": "2026-10-20 起 Shopify 对站外跳转加防护（10-23 收窄为恶意拦截/可疑确认）。自有未绑定域名、融资/预约/第二店铺等合法外链仍可能弹「确定离开？」或被拦，且后台无法关闭或加白名单；结账旁异常域名更可怕。",
+      "failEn": "From 2026-10-20 Shopify added leave-store protection (narrowed 10-23 to block malicious / confirm suspicious). Owned-but-unconnected domains and legit financing/booking/second-storefront links can still prompt or block—no merchant off-switch or allowlist. Unexpected domains next to checkout are worse.",
+      "fixZh": "Settings→Domains 绑定自有域；手机无痕点测导航/页脚/融资按钮并记录域名；结账或加购出现陌生域先查 App/主题再报 Support（页路径+截图）；勿用主题脚本强行隐藏提示。",
+      "fixEn": "Connect owned domains under Settings→Domains; phone-test menus/footer/financing CTAs and log domains; if Add to cart/Checkout names an unknown host, audit apps/theme then file Support with path+screenshot—don’t hack the prompt away in theme JS.",
+      "platforms": [
+        "Shopify"
+      ],
+      "severity": "medium",
+      "date": "2026-10-20",
+      "tags": [
+        "leave-store",
+        "redirect",
+        "domains",
+        "bfcm"
+      ]
+    },
+    {
+      "id": "ads-ty-scripts-meta-gap",
+      "demo": false,
+      "category": "ads",
+      "titleZh": "Thank You 附加脚本停后 Meta 少报购",
+      "titleEn": "Thank You scripts died—Meta under-counts purchases",
+      "failZh": "2026-08-26 非 Plus 店 Thank You/订单状态页 Additional Scripts 失效后，多店 Shopify 订单正常但 Meta 购买偏少；原挂在收据页的浏览器像素/部分 CAPI 静默停火，智能出价先按残缺转化砍量。",
+      "failEn": "After the 2026-08-26 non-Plus Thank You/Order Status Additional Scripts cutoff, several stores kept normal Shopify orders while Meta purchases dipped. Browser pixels (and some CAPI paths) that lived on the old receipt page went quiet—Smart Bidding scales down on partial conversion signal.",
+      "fixZh": "把购买事件迁到 Settings→Customer events（官方 Meta/Google 渠道或自定义像素订阅 checkout_completed）；Events Manager 对比 8/26 前后 browser vs server；测一单核对 event_id 去重；放量以店铺实收为准并标注缺口日。",
+      "fixEn": "Move purchase tags to Settings→Customer events (official Meta/Google channel or custom pixel on checkout_completed); compare browser vs server in Events Manager around Aug 26; place a paid test order and confirm event_id dedupe; scale on Shopify paid orders and annotate the gap days.",
+      "platforms": [
+        "Shopify",
+        "Meta",
+        "Google Ads"
+      ],
+      "severity": "high",
+      "date": "2026-08-26",
+      "tags": [
+        "checkout-extensibility",
+        "thank-you",
+        "pixel",
+        "capi",
+        "meta"
+      ]
+    },
+    {
+      "id": "ship-ddp-usps-rate-gap",
+      "demo": false,
+      "category": "shipping",
+      "titleZh": "Markets 预付关税配了不支持承运商",
+      "titleEn": "Prepaid DDP offered with non-DDP carriers",
+      "failZh": "开启 Shopify Markets 结账预付关税（DDP）后，买家仍可选 USPS First Class International（约 $32）并勾预付关税；USPS 实际不支持 DDP 面单。商家买标只能改 DHL DDP（约 $52）再另付约 $22 关税，差额由店承担。",
+      "failEn": "With Markets prepaid duties on, checkout still let a buyer pick USPS First Class International (~$32) plus prepaid duties—USPS can’t issue DDP labels. At label buy the merchant was forced onto DHL DDP (~$52) plus ~$22 duties/taxes not fully collected at checkout.",
+      "fixZh": "开 DDP 的国际分区只保留支持预付关税的承运商（如 DHL Express 等官方名单）；去掉 USPS 等不兼容选项；用测试结账核对买家运费与可买面单一致后再放量。",
+      "fixEn": "In DDP-enabled international zones keep only carriers Shopify can buy DDP labels for (e.g. DHL Express per Help docs); remove USPS/other non-DDP rates; test-checkout until quoted shipping matches a buyable DDP label before scaling.",
+      "platforms": [
+        "Shopify",
+        "Shopify Markets",
+        "USPS",
+        "DHL"
+      ],
+      "severity": "high",
+      "date": "2025-06-04",
+      "tags": [
+        "ddp",
+        "duties",
+        "markets",
+        "shipping-rates"
+      ]
+    },
     {
       "id": "ads-meta-on-device-cv",
       "demo": false,

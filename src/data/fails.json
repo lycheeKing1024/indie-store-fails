@@ -1,8 +1,79 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-05",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, and 2026-11-05 (leave-store link protect, Markets DDP/USPS gap, Thank You scripts→Meta gap). demo=false = sourced.",
+  "generatedAt": "2026-11-06",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, and 2026-11-06 (myshopify CF bypass bots, spam-bomb Shop Credit fraud, reserve met-but-stuck). demo=false = sourced.",
   "fails": [
+    {
+      "id": "chk-myshopify-cf-bypass",
+      "demo": false,
+      "category": "checkout",
+      "titleZh": "机器人绕过自有 Cloudflare 打 myshopify 子域",
+      "titleEn": "Bots bypass your Cloudflare via myshopify subdomain",
+      "failZh": "代理店遭 500+/小时假加购；已上 hCaptcha、行为风控 App、自有 Cloudflare Challenge 限速与国家/ASN 封锁仍无效。日志显示机器人直打 Shopify 托管的 *.myshopify.com（或 shops.myshopify.com 路由子域），自有 CF WAF/限速完全摸不到；Support 称无法在该子域代拦。",
+      "failEn": "Agency client hit 500+/hr fake add-to-carts. hCaptcha, behavior bot apps, Cloudflare Challenge rate-limits and country/ASN blocks still failed—logs showed bots hitting Shopify-managed *.myshopify.com (not the custom domain), so merchant CF WAF never saw them. Support offered no backend block on that subdomain.",
+      "fixZh": "Settings→Checkout 临时强制登录结账压假车；DNS 用代理 CNAME 到 shops.myshopify.com（勿裸 A 记录）；监控/告警把 *.myshopify.com 流量算进去，勿只看主域。",
+      "fixEn": "Temporarily require customer accounts at checkout to blunt fake carts; proxy custom DNS as CNAME→shops.myshopify.com (not a bare A); alert on *.myshopify.com traffic too—custom-domain CF alone is not enough.",
+      "platforms": [
+        "Shopify",
+        "Cloudflare"
+      ],
+      "severity": "high",
+      "date": "2026-04-20",
+      "tags": [
+        "bots",
+        "cloudflare",
+        "myshopify",
+        "waf",
+        "checkout"
+      ]
+    },
+    {
+      "id": "pay-spam-bomb-shop-credit",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "垃圾邮件淹没后开 Shop 信贷盗刷数万",
+      "titleEn": "Spam bomb hid Shop Credit fraud for $25k+",
+      "failZh": "一夜涌入上千封无关订阅把收件箱淹没；翻到深处才见 recovery code 登录、欢迎开通 Shopify Credit、信贷披露。攻击者已开约 $30k 额度并刷约 $25k 假批发单到丢弃地址。店主用 Authenticator 2FA 仍中招；Support 称调查可长达 90 天且账户因「可疑」被冻，真单也无法出。",
+      "failEn": "Thousands of junk signups buried the inbox overnight. Deep in the flood: recovery-code login, Shopify Credit welcome, and disclosure emails. Attackers opened ~$30k credit and charged ~$25k fake wholesale to drop addresses—despite authenticator 2FA. Support cited up to ~90-day investigation while freezing the store for “suspicious activity.”",
+      "fixZh": "垃圾邮件潮立刻搜 Shopify/recovery/Credit；关全部会话、换密、硬件密钥优先；同步冻个人征信并银行侧争议；截图时间线与垃圾洪峰作证据，勿干等 Support。",
+      "fixEn": "On a spam flood, search immediately for Shopify/recovery/Credit; revoke sessions, rotate passwords, prefer hardware keys; freeze personal credit + dispute with banks; screenshot timelines—don’t wait on Support alone.",
+      "platforms": [
+        "Shopify",
+        "Shopify Credit"
+      ],
+      "severity": "high",
+      "date": "2026-03-25",
+      "tags": [
+        "account-takeover",
+        "spam-bomb",
+        "shop-credit",
+        "2fa",
+        "session"
+      ]
+    },
+    {
+      "id": "pay-reserve-met-still-stuck",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "达「拒付<1%·30天」仍不解冻保证金",
+      "titleEn": "Met <1% CB for 30 days—reserve still stuck",
+      "failZh": "卡测攻击后 Shopify Payments 加 30% 保证金，邮件写拒付率连续 30 天低于 1% 可提前释放。商家修风控并达标后多轮顾问确认「已满足条件、已交 Credit Risk」，却数周无解冻、无拒信、无补件要求，保证金滚到近 $10k，另背约 $4k 债务。",
+      "failEn": "After a carding spike Shopify Payments put a 30% reserve, emailing early release if CB stayed under 1% for 30 straight days. Merchant fixed fraud, hit the bar, and advisors repeated “requirements met / with Credit Risk”—yet weeks later no release, denial, or doc request while the reserve grew near $10k (~$4k debt carried).",
+      "fixZh": "勿单押 SP：备第二网关与现金缓冲；达标后书面催 Underwriting 并保留工单；可考虑 CFPB 等外部投诉通道；现金流按数月锁定期规划。",
+      "fixEn": "Don’t single-home on SP—stand up a backup gateway and cash buffer; after meeting terms, escalate Underwriting in writing and keep ticket IDs; consider external complaints (e.g. CFPB); cash-plan for multi-month locks.",
+      "platforms": [
+        "Shopify Payments"
+      ],
+      "severity": "high",
+      "date": "2026-06-15",
+      "tags": [
+        "reserve",
+        "chargeback",
+        "payout-hold",
+        "underwriting",
+        "cashflow"
+      ]
+    },
     {
       "id": "chk-leave-store-link-protect",
       "demo": false,

@@ -1,8 +1,81 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-06",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, and 2026-11-06 (myshopify CF bypass bots, spam-bomb Shop Credit fraud, reserve met-but-stuck). demo=false = sourced.",
+  "generatedAt": "2026-11-09",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, and 2026-11-09 (bot-protect Meta IAB, view-transition white screen, SP re-enable still Provider Action Required). demo=false = sourced.",
   "fails": [
+    {
+      "id": "chk-bot-protect-meta-iab",
+      "demo": false,
+      "category": "checkout",
+      "titleZh": "机器人防护误拦 Meta 内置浏览器",
+      "titleEn": "Bot protection blocks Meta in-app browsers",
+      "failZh": "店主用自己的 Chrome 打开店铺，只看到空白页上的 local_rate_limited。Support 调边缘日志后称「机器人防护判定该会话为自动化流量，属预期行为」。五天内店面出现 1,688 次 429，大量归到 VPN/托管/数据中心/Meta 基础设施 IP。消费级杀毒（如 McAfee）会在公共 Wi-Fi 自动开 VPN；从 Facebook/Instagram 应用内点广告也会中招。一商家当月 Meta 花费 £3,531.72，Facebook 转化率从 5 月的 3.33% 掉到 0.78%。2026-08-17 Shopify 员工公开确认部分 Meta 应用内浏览器流量被误分类并在调查。拦截发生在分析脚本加载前，后台只见访客变少、没有报错。",
+      "failEn": "A merchant opened their own storefront in Chrome and got a blank page reading only local_rate_limited. Support pulled edge logs and called it expected bot-protection behavior. In five days the shop saw 1,688 storefront 429s, many attributed to VPNs, hosting, datacenters, or Meta infrastructure IPs. Consumer antivirus (e.g. McAfee) can auto-enable a VPN on public Wi-Fi; Facebook/Instagram in-app browsers that carry paid-social clicks were also hit. One merchant spent £3,531.72 on Meta that month while Facebook conversion rate fell from 3.33% in May to 0.78%. On 2026-08-17 Shopify staff publicly confirmed some Meta in-app browser traffic was being misclassified and was under investigation. Because the block happens before analytics load, dashboards show fewer visitors—not an error.",
+      "fixZh": "用杀毒自带 VPN，并在 Facebook/Instagram 应用内点自己的广告实测（勿把链接粘到 Safari/Chrome）；对比广告点击与店铺会话，缺口突然拉大且无投放变更就要怀疑；把空白页/local_rate_limited/429 的 request ID 与 HAR 交给 Support；大促前不要只靠状态页或后台无报错判断店铺可达。",
+      "fixEn": "Reproduce with a consumer antivirus VPN and by tapping your own ads inside Facebook/Instagram (not a pasted link in Safari/Chrome); compare ad clicks vs store sessions—a sudden unexplained gap is the signal; send Support the request ID and HAR for any blank/local_rate_limited/429 page; don’t treat a quiet dashboard or green status page as proof the storefront is reachable before a sale.",
+      "platforms": [
+        "Shopify",
+        "Meta",
+        "Cloudflare"
+      ],
+      "severity": "high",
+      "date": "2026-08-17",
+      "tags": [
+        "bot-protection",
+        "meta",
+        "in-app-browser",
+        "vpn",
+        "429"
+      ]
+    },
+    {
+      "id": "chk-view-transition-meta-iab",
+      "demo": false,
+      "category": "checkout",
+      "titleZh": "主题 View Transition 让 Meta 内置浏览器白屏",
+      "titleEn": "Theme view transitions blank Meta in-app browsers",
+      "failZh": "Drive、Atelier 3.5.1、Horizon 等主题在 Chrome/Brave 一切正常，但 Facebook/Instagram 应用内浏览器里，直达链接能打开，一点站内导航或「立即购买」整页变白。地址栏已变，锁屏再亮却能看到已加载的页面。根因是 base.css 里的 @view-transition { navigation: auto; }：Meta 的 WebView 启动了跨文档过渡却永不结束，页面停在未绘制状态。",
+      "failEn": "Stores on Drive, Atelier 3.5.1, or Horizon looked fine in Chrome and Brave, but inside Facebook and Instagram’s in-app browsers a direct URL loaded while any in-app navigation or Buy Now left a white screen. The URL changed, and locking then unlocking the phone revealed the destination—content had loaded but never painted. Root cause: @view-transition { navigation: auto; } in base.css. Meta’s WebView starts the cross-document transition and never finishes it.",
+      "fixZh": "把 Horizon 家族主题升级到 4.11+（官方已加入类似兼容代码）；或在 theme.liquid 检测 FBAN|FBAV|Instagram 给 html 加上 meta-iab 类，并把 @view-transition 包进 html:not(.meta-iab)。上线前必须在 Facebook/Instagram 应用内点测导航与立即购买，不要只在系统浏览器里验收。",
+      "fixEn": "Upgrade Horizon-family themes to 4.11+ (Shopify added similar compatibility code); or detect FBAN|FBAV|Instagram in theme.liquid, add a meta-iab class on html, and wrap @view-transition in html:not(.meta-iab). QA navigation and Buy Now inside the Facebook/Instagram apps—system Chrome/Safari alone will miss it.",
+      "platforms": [
+        "Shopify",
+        "Meta"
+      ],
+      "severity": "high",
+      "date": "2026-06-29",
+      "tags": [
+        "view-transition",
+        "theme",
+        "meta",
+        "in-app-browser",
+        "horizon"
+      ]
+    },
+    {
+      "id": "pay-sp-reenable-provider-block",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "Payments 已恢复，结账仍显示「待服务商处理」",
+      "titleEn": "Payments re-enabled, checkout still “Provider Action Required”",
+      "failZh": "商家因错过身份验证被关 Shopify Payments，补件并上诉后 Merchant Trust 批准恢复，邮件写「账户已启用 / 销售已恢复 / 资料已核实」，Support 也确认欺诈冻结已解除、与验证无关。但 34 天、15+ 次工单后顾客仍无法结账：后台一边显示可收款，一边写顾客无法结账；Visa/Mastercard/Shop Pay 标「结账不可用」，仪表盘写「Shopify Payments 销售已暂停」。最新回复改口称支付方式为「Provider Action Required」，问题在支付服务商/银行合作方而非 Merchant Trust，且无解决时限；订阅费仍在扣。",
+      "failEn": "After a missed identity check disabled Shopify Payments, the merchant submitted docs and won an appeal. Merchant Trust re-enabled the account; emails said “account enabled / sales resumed / business details verified,” and Support confirmed fraud holds were gone and verification was no longer the issue. More than 34 days and 15+ tickets later, customers still could not check out: the Payments page showed payouts active but checkout unavailable; Visa, Mastercard and Shop Pay read “Unavailable at checkout,” and the dashboard said Shopify Payments sales were paused. Support then labeled the methods “Provider Action Required,” pointing to a payment-provider/banking partner rather than Merchant Trust, with no resolution timeline—while the Shopify subscription kept billing.",
+      "fixZh": "恢复邮件不等于结账已通：用测试单确认 Visa/Mastercard/Shop Pay 按钮可用。若出现「Provider Action Required」，书面要求升级到支付服务商/银行侧并记下工单号与时间线；立刻启用备用网关（PayPal/Stripe 等）恢复收款；订阅费与停售重叠期保留证据以便交涉。",
+      "fixEn": "A re-enable email is not a live checkout—place a test order and confirm Visa/Mastercard/Shop Pay buttons work. If methods show “Provider Action Required,” escalate in writing to the payments-provider/banking side and keep ticket IDs plus a timeline; stand up a backup gateway (PayPal/Stripe, etc.) immediately; keep records of subscription fees billed while sales were paused.",
+      "platforms": [
+        "Shopify Payments",
+        "Shop Pay"
+      ],
+      "severity": "high",
+      "date": "2026-06-15",
+      "tags": [
+        "shopify-payments",
+        "provider-action",
+        "checkout-blocked",
+        "verification",
+        "backup-gateway"
+      ]
+    },
     {
       "id": "chk-myshopify-cf-bypass",
       "demo": false,

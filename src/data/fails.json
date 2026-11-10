@@ -1,8 +1,79 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-09",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, and 2026-11-09 (bot-protect Meta IAB, view-transition white screen, SP re-enable still Provider Action Required). demo=false = sourced.",
+  "generatedAt": "2026-11-10",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, and 2026-11-10 (no-action payout review, ParcelPanel DHL Delivered email, API 2026-10 silent no-rates). demo=false = sourced.",
   "fails": [
+    {
+      "id": "pay-review-no-action-pause",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "账户「无需操作」审查，打款却被静默暂停",
+      "titleEn": "“No action required” review silently pauses payouts",
+      "failZh": "2026-11-04，一家加拿大零售商（两家实体店加独立站）发现 Shopify Payments 打款突然被暂停。后台写账户审查中、最多约一周，且「目前无需操作」。电话与在线客服都称账户状态正常、暂不要求补件，工单已标优先，但只有 Payments 团队能发邮件、无法转接、也无明确解决时限。顾客仍可付款，货款却到不了银行，已排期的 11 月 4–5 日打款去向不明，影响供货与日常开支。",
+      "failEn": "On 2026-11-04 a Canadian retailer with two physical stores plus an online shop found Shopify Payments payouts suddenly paused. Admin said the account was under review for up to a week and that no action was required. Live chat and phone support said the account was in good standing, no documents were needed, and the case was escalated as priority—but only the Payments team can email, Support cannot transfer the call, and there was no firm resolution date. Stores could still take payment, yet funds would not reach the bank; payouts already scheduled for November 4–5 were in limbo, threatening supplier payments and daily costs.",
+      "fixZh": "勿把「无需操作」当成打款仍在走：打开 Finance→Payouts 核对哪些打款显示暂停并截图保存；查店主邮箱及垃圾箱（Payments 团队来信常与客服不同）。书面要求记下工单号、是否需补件与时限，勿另开第二张工单以免排队后移。审查期间启用 PayPal/Stripe 等备用网关，并预留一周以上现金流，勿单押 Shopify Payments。",
+      "fixEn": "Don’t treat “no action required” as proof payouts are moving: open Finance → Payouts, note which payouts are on hold, and save screenshots. Check the account-owner inbox and spam—Payments-team mail often comes from a different address than Support chat. Ask Support to put the case number, any requirements, and the timeline in writing; avoid opening a second ticket, which can push the review back. Stand up a backup gateway (PayPal/Stripe, etc.) and keep more than a week of cash buffer; don’t single-home on Shopify Payments.",
+      "platforms": [
+        "Shopify Payments"
+      ],
+      "severity": "high",
+      "date": "2026-11-04",
+      "tags": [
+        "payout-hold",
+        "account-review",
+        "shopify-payments",
+        "cashflow",
+        "bfcm"
+      ]
+    },
+    {
+      "id": "apps-parcelpanel-dhl-delivered-mail",
+      "demo": false,
+      "category": "apps",
+      "titleZh": "Shopify 接管 DHL 德国轨迹后，原生签收邮件被 App 写回跳过",
+      "titleEn": "DHL Germany native tracking + ParcelPanel skips Delivered emails",
+      "failZh": "商家发现顾客不再收到 Shopify 原生的「已送达」邮件。客服解释：2026 年 10 月起 Shopify 开始直接追踪 DHL Germany 包裹；同时 ParcelPanel 仍会回写物流状态，且通知开关为关，于是原生 Delivered 邮件被跳过。包裹其实已签收，平台签收通知却静默消失。",
+      "failEn": "A merchant noticed customers stopped receiving Shopify’s native Delivered email. Support said Shopify began tracking DHL Germany shipments directly in October 2026, while ParcelPanel was still writing tracking status back to Shopify with notifications turned off—so the native Delivered email was skipped. Parcels were delivered, but the platform delivery notice never went out.",
+      "fixZh": "在 ParcelPanel 关闭「把物流状态写回 Shopify 通知」一类选项，让 Shopify 按原生 DHL Germany 轨迹自己触发 Delivered 邮件；发一单德国 DHL 实测，并核对 Settings→Notifications 里 Delivered 模板仍启用。若坚持用 App 发信，改为只走 App 通知，避免两边同时写状态。",
+      "fixEn": "In ParcelPanel, turn off the setting that writes tracking status back to Shopify notifications so Shopify can fire its own Delivered email from native DHL Germany tracking events; send a test DHL Germany shipment and confirm the Delivered template is still enabled under Settings → Notifications. If you prefer the app’s emails, send only from the app and don’t let both systems write status.",
+      "platforms": [
+        "Shopify",
+        "ParcelPanel",
+        "DHL"
+      ],
+      "severity": "medium",
+      "date": "2026-11-05",
+      "tags": [
+        "notifications",
+        "delivered-email",
+        "dhl-germany",
+        "parcelpanel",
+        "tracking"
+      ]
+    },
+    {
+      "id": "ship-carrier-api-no-auto-add",
+      "demo": false,
+      "category": "shipping",
+      "titleZh": "API 2026-10 后新装运费 App，结账静默无费率",
+      "titleEn": "API 2026-10: new shipping apps silently return no rates",
+      "failZh": "Admin API 2026-10 起，创建 carrier service 不再自动加入店铺的 General 运费配置及其分区。新装、重装或迁移实时运费 App（若已切到该版本）后，结账可能直接没有运费可选，且不报错。重装后分区里旧的「使用承运商或 App 计算运费」行看起来还在，却可能指向已失效的 carrier-service ID；App 超时同样只表现为无费率。社区反馈因此丢掉订单，Q4 放量前不易察觉。",
+      "failEn": "As of Admin API version 2026-10, creating a carrier service no longer adds it to the shop’s General shipping profile or its zones. Stores that install, reinstall, or migrate a live-rate shipping app on that API version can reach checkout with no rates and no error. After a reinstall, a zone’s “Use carrier or app to calculate rates” line can still look correct while pointing at an obsolete carrier-service ID; app timeouts also fail closed as “no rate.” A community report warned of lost orders because the failure is silent—easy to miss before Q4 volume.",
+      "fixZh": "打开 Settings→Shipping and delivery，确认每个分区都有「使用承运商或 App 计算运费」且选中当前 App；刚重装的话，删掉旧费率行再从下拉重新添加。核对商品是否在你刚改的配置（自定义配置不会读 General）。向各运费 App 确认其 API 版本及是否会自动挂到配置；对每个分区和独立配置里的商品测一单结账后再开广告。",
+      "fixEn": "In Settings → Shipping and delivery, open the profile that holds your products and confirm each zone has a “Use carrier or app to calculate rates” entry pointing at the current app. After a reinstall, delete the old rate line and add it again from the dropdown. Check that the SKUs sit in the profile you edited—custom profiles ignore General. Ask each live-rate app which API version it uses and whether it attaches rates to a profile; test-checkout every zone (and products in separate profiles) before turning ads back on.",
+      "platforms": [
+        "Shopify"
+      ],
+      "severity": "high",
+      "date": "2026-10-14",
+      "tags": [
+        "shipping-rates",
+        "carrier-service",
+        "api-2026-10",
+        "checkout",
+        "apps"
+      ]
+    },
     {
       "id": "chk-bot-protect-meta-iab",
       "demo": false,

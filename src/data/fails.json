@@ -1,8 +1,80 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-10",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, and 2026-11-10 (no-action payout review, ParcelPanel DHL Delivered email, API 2026-10 silent no-rates). demo=false = sourced.",
+  "generatedAt": "2026-11-11",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, and 2026-11-11 (DKK→GBP refunds stuck pending, closed-ticket UBO payout hold, agentic checkout fee-app bypass). demo=false = sourced.",
   "fails": [
+    {
+      "id": "pay-refund-currency-dkk-gbp",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "打款币种从克朗改英镑后，退款卡在「待处理」",
+      "titleEn": "DKK→GBP payout switch leaves refunds stuck pending",
+      "failZh": "一家丹麦店铺以英镑销售，2026-08-07 把 Shopify Payments 打款币种从丹麦克朗（DKK）改为英镑（GBP）。此后退款反复失败：先是克朗订单无法动用英镑余额，后来连英镑订单也不能退。客服曾在 10 月把负余额按 2% 手续费折成英镑，并称已修好，数周后又复发。客服改口说克朗余额不足，尽管账户里约有 55,000 英镑。到 11 月初，约 90 单、随后超过 100 单退款停在待处理，顾客投诉与拒付上升。工单 69705089 一度无人回复。欧洲非欧元银行账户的负余额通常靠后续销售填平，Shopify 不会直接扣银行；若新销售全是英镑，克朗缺口可能一直补不上。文档还写明：任一余额仍为负时，后面的退款不论币种都排在同一队列。",
+      "failEn": "A Denmark-based store selling in GBP changed its Shopify Payments payout currency from DKK to GBP on 2026-08-07. Refunds then failed repeatedly: first DKK orders could not use the GBP balance, later GBP orders could not be refunded either. Support converted negative DKK/EUR balances to GBP in October (2% fee) and said it was fixed; within weeks it returned. Support then said refunds were held for insufficient DKK funds, even though the account held about £55,000 in GBP. By early November about 90 orders, then more than 100, sat in pending refunds, with customer complaints and chargebacks. Ticket 69705089 went unanswered for a stretch. For European accounts with a non-euro bank, Shopify’s refund docs say negative balances are cleared by future sales—not by debiting the bank—so a leftover DKK deficit may never fill if new sales are all GBP. The same docs say pending refunds only run, in creation order, after the negative balance is cleared, which is why GBP refunds queued too.",
+      "fixZh": "先导出受影响订单与退款流水，核对原支付币种、退款状态和各币种余额，切勿在待处理未结束时重复点退款。打开订单列表横幅，看「还款 / Make a payment」合计（负余额加待处理退款）。还款前务必让客服书面确认：这笔钱会冲哪一个币种余额、以及付完后队列会按时间释放；若曾因账户已有英镑而被退回打款，先把这一点写进工单再操作。多出来的款项应在下一笔打款退回。审查期间尽快接入备用网关，避免在无法退款时继续只走 Shopify Payments。",
+      "fixEn": "Export the affected orders and refund transactions and check original payment currency, refund status, and each currency balance; do not click refund again while earlier attempts are still pending. On the Orders page, look for the banner with a Make a payment total (negative balance plus pending refunds). Before paying, get Support to confirm in writing which balance that payment will clear and that it will release the queue—especially if a previous banner payment was returned because a large GBP balance was already on the account. Any overpayment should come back in the next payout. Stand up a backup payment provider so you are not taking new Shopify Payments orders you cannot refund.",
+      "platforms": [
+        "Shopify Payments"
+      ],
+      "severity": "high",
+      "date": "2026-11-03",
+      "tags": [
+        "refunds",
+        "payout-currency",
+        "negative-balance",
+        "shopify-payments",
+        "denmark"
+      ]
+    },
+    {
+      "id": "pay-verify-closed-tickets-ubo",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "工单全被关闭、按钮点不了，货款被扣六个星期",
+      "titleEn": "Closed tickets and dead buttons hold payouts for six weeks",
+      "failZh": "一名商家自 2026-09-21 起 Shopify Payments 打款被冻结，到 10 月中已超 12,000 欧元，后来升至约 14,600 欧元。四个星期内开了 9 张工单，全部在问题未解决时被关闭，无法再回复；邮件给法务也被转回这些已关闭工单。后台 Payments 有蓝色「核实企业信息 · 等待处理」横幅，Versements（打款）页有橙色「需要操作」，却都点不进去。10 月 2 日系统称银行拒收一笔打款，银行书面确认账户无问题，点「我已解决银行问题」后也毫无变化。大约第 30 天才收到核验邮件，要求提供带增值税号与公司全称的官方文件，以及实益所有人（UBO，法国相当于 RBE）声明；邮件里的文件链接无效，又拖了一周。补齐材料后几天货款到账，前后共扣约六个星期。商家同期装了 Mollie，并在 X 点名 @ShopifySupport。另一名商家 11 月 4 日称仍卡在类似状态。",
+      "failEn": "A merchant’s Shopify Payments payouts were blocked from 2026-09-21. By mid-October more than €12,000 was held, later about €14,600. In four weeks they opened nine Support tickets; each was closed while the problem was still open, so they could not reply, and legal email was sent back to those same closed tickets. In admin, a blue “verify business information · pending resolution” banner on Payments and an orange “Action required” button on Payouts were both not clickable. On October 2 the system said the bank had refused a payout; the bank confirmed in writing that the account was fine, and clicking “I have resolved my bank issue” did nothing. An email from the verification team arrived only on about day 30, asking for an official document with the VAT number and full company name, plus a UBO (beneficial-owner) declaration. The document link in that email was invalid, adding another week. After the paperwork was completed, the held funds arrived within days—about six weeks in total. The merchant had also installed Mollie and posted on X tagging @ShopifySupport. Another merchant reported a similar stall on November 4.",
+      "fixZh": "别在已关闭工单里空等：查店主邮箱和垃圾箱，直接回复 Payments / 核验团队的来信（那才到经办人）。后台若有「需要操作」却点不开，书面要求发可用的补件链接，并准备增值税号+公司全称的官方文件与 UBO/RBE 声明，不要等按钮自己好。记下每张工单与邮件的日期，勿把店铺权限交给私信「帮忙」的人。审查一开始就启用 Mollie、PayPal 等备用网关，不要把现金流单押在 Shopify Payments。",
+      "fixEn": "Don’t wait inside closed tickets: check the store-owner inbox and spam, and reply to mail from the Payments / verification team—that is what reaches the people on the case. If an “Action required” control is not clickable, ask in writing for a working document link, and have an official VAT-number + legal-name document and a UBO declaration ready instead of waiting for the button to work. Keep a dated log of every ticket and email, and never hand store access to someone offering help in a private message. Enable a backup gateway such as Mollie or PayPal as soon as a review starts; don’t single-home cash flow on Shopify Payments.",
+      "platforms": [
+        "Shopify Payments"
+      ],
+      "severity": "high",
+      "date": "2026-09-21",
+      "tags": [
+        "payout-hold",
+        "verification",
+        "closed-tickets",
+        "ubo",
+        "shopify-payments"
+      ]
+    },
+    {
+      "id": "chk-agentic-fee-bypass",
+      "demo": false,
+      "category": "checkout",
+      "titleZh": "AI 代客下单绕过费用 App，危化等强制附加费没加上",
+      "titleEn": "Agentic checkout skips fee apps and drops mandatory surcharges",
+      "failZh": "一名多供应商 B2B 商家销售含危化、温控等必须加收附加费的商品。经由 ChatGPT、Google 等 AI 购物代理下的订单会绕过常规购物车与结账，购物车层费用 App（如 Magical Fees）加不上危化费、温控运费、供应商/SKU 与关税附加费，每单都在亏。商家已关闭加速结账，又试过结账层的 VOL Extra Fees & Surcharges，开发者工作数周后确认这是平台限制、App 修不了。客服给出的可靠方案是升到 Shopify Plus，对尚在起步的商家不现实。Shop Pay 也曾出现类似绕过，只好关掉大部分快捷结账。",
+      "failEn": "A multi-vendor B2B merchant selling hazmat and temperature-controlled goods saw orders placed through AI shopping agents such as ChatGPT and Google skip the normal cart and checkout. Cart-level fee apps (including Magical Fees) never applied required hazmat, temperature-control, vendor, SKU, and tariff surcharges, so each affected order lost money. The merchant disabled accelerated checkout, then tried a checkout-level app (VOL Extra Fees & Surcharges); after weeks of work the app’s developers said this was a Shopify platform limit they could not fix. Support’s reliable path was upgrading to Shopify Plus, which was not realistic for a new business. Shop Pay had already forced a similar retreat: most quick-checkout options had to be turned off.",
+      "fixZh": "不一定要升 Plus。打开销售渠道里的 Agentic（或对应 AI 渠道），关闭「直接结账 / 由 Shopify 代管」，保留目录可见：代理仍能推荐商品，顾客必须点回官网，费用 App 才会跑。必须让代理也能下单时，把强制附加费写进原生运费：Settings→Shipping and delivery，为危化/温控商品建独立运费配置，把附加费加进费率名称与价格（例如「标准运费 + 强制危化费」）。原生运费引擎走服务端，API/Agentic 结账绕不开。用购物车或浏览器里存费的 App 更易被跳过，优先用结账阶段、服务端逻辑，并自己走一单 AI 下单验收。",
+      "fixEn": "You don’t need Plus to close the gap. In Sales channels → Agentic (or the matching AI channel), turn off Direct Checkout / “Allow Shopify to manage for me” and leave Catalog access on: agents can still recommend products, but the buyer has to check out on your site so fee apps can run. If agents must be able to complete the order, bake mandatory surcharges into native shipping: under Settings → Shipping and delivery, create a profile for hazmat / temperature-controlled items and add the fee into the rate name and price (for example, “Standard shipping + mandatory hazmat fee”). Shopify’s native shipping engine is server-side, so API/agentic checkouts cannot skip it. Apps that store fees in the cart or the browser are easier to bypass; prefer checkout-stage, server-side logic, and place a test order through an agent before you rely on the path.",
+      "platforms": [
+        "Shopify",
+        "ChatGPT",
+        "Magical Fees",
+        "VOL Extra Fees"
+      ],
+      "severity": "high",
+      "date": "2026-05-26",
+      "tags": [
+        "agentic-checkout",
+        "surcharges",
+        "hazmat",
+        "fee-apps",
+        "checkout"
+      ]
+    },
     {
       "id": "pay-review-no-action-pause",
       "demo": false,

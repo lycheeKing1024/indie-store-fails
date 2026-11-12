@@ -1,8 +1,56 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-11",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, and 2026-11-11 (DKK→GBP refunds stuck pending, closed-ticket UBO payout hold, agentic checkout fee-app bypass). demo=false = sourced.",
+  "generatedAt": "2026-11-12",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, and 2026-11-12 (label verify over 24h, Stocky read-only window). demo=false = sourced.",
   "fails": [
+    {
+      "id": "ship-label-verify-over-24h",
+      "demo": false,
+      "category": "shipping",
+      "titleZh": "买面单卡在「账户核验」，24 小时承诺拖过百小时",
+      "titleEn": "Label buying stuck on account verification well past 24 hours",
+      "failZh": "2026-11-11，两名商家同一天在 Shopify Community 报告：买面单时出现 “Shipping labels are temporarily unavailable. We are verifying your account before you can purchase shipping labels. This process may take up to 24 hours.” 其中一人称已超过 100 小时、自周四起就无法出单，已付款订单积压；多次联系客服只有安抚，没有核验结果或时限。另一人一周前刚把旧站迁到 Shopify，同一条文案已卡 2 天，聊天客服称已转内部团队，但 “no definite timeline”。官方故障排除文档写明：账户或身份核验期间会暂停购买面单，通常 24 小时内完成，超时应联系支持。两例实际等待都远超该时间，Shopify Shipping 折扣面单不可用，订单发不出去。",
+      "failEn": "On 2026-11-11, two merchants posted on the Shopify Community that buying a label showed: “Shipping labels are temporarily unavailable. We are verifying your account before you can purchase shipping labels. This process may take up to 24 hours.” One said the hold had already lasted more than 100 hours, since the previous Thursday, with paid orders sitting unfulfilled; repeated Support contacts produced empathy but no review outcome or timeline. The other had migrated a site to Shopify a week earlier and had been stuck on the same message for two days; chat said the request was sent to an internal team with “no definite timeline.” Shopify’s troubleshooting docs say label purchases are paused during an account or identity check and usually finish within 24 hours, after which you should contact Support. In both reports the wait far exceeded that window, so discounted Shopify Shipping labels could not be bought and orders could not go out.",
+      "fixZh": "不要只盯着横幅空等。官方文档写明超过 24 小时应联系支持：在同一张工单里要求升级到能处理「面单账户核验」的团队，写明已付款未发货订单和已等待时长，不要另开新单。同时用 USPS、UPS、FedEx 或第三方打单服务直接买面单，在 Shopify 里完成履约并填入运单号，顾客仍能收到物流更新（社区建议这条，受影响商家也确认可行，只是通常比 Shopify Shipping 更贵）。并检查 Settings → Locations 发货地址是真实街道地址而非 PO Box，店主邮箱和垃圾箱有没有身份核验邮件，以及 Settings → Billing 是否有未付的面单余额（官方写明欠费会拦住继续买面单）。若还想等 Shopify Shipping 恢复后再买官方面单，不要先把订单标成已发货，否则原生「购买运费标签」入口会消失。",
+      "fixEn": "Don’t wait on the banner. Shopify’s docs say to contact Support after 24 hours: in the same ticket, ask for an escalation to the team that handles shipping-label account verification, include the paid unfulfilled orders and the elapsed time, and do not open a new ticket. Meanwhile buy labels directly from USPS, UPS, FedEx, or a third-party label service, fulfill the order in Shopify, and paste in the tracking number so the buyer still gets updates. Community replies recommended this, and an affected merchant confirmed it works, though it is often more expensive than Shopify Shipping. Also check that Settings → Locations uses a real street address rather than a PO Box, that the store-owner inbox and spam folder have no pending identity-verification email, and that Settings → Billing has no outstanding shipping-label balance—Shopify documents that an unpaid balance blocks new labels. If you still want to buy official Shopify Shipping labels once verification clears, do not mark those orders fulfilled first, or the native Buy shipping label action disappears.",
+      "platforms": [
+        "Shopify Shipping",
+        "USPS",
+        "UPS"
+      ],
+      "severity": "high",
+      "date": "2026-11-11",
+      "tags": [
+        "shipping-labels",
+        "account-verification",
+        "fulfillment",
+        "shopify-shipping"
+      ]
+    },
+    {
+      "id": "apps-stocky-readonly-window",
+      "demo": false,
+      "category": "apps",
+      "titleZh": "Stocky 只读导出窗口临近关闭，关键数据并不在文件里",
+      "titleEn": "Stocky’s read-only export window is closing—and some data was never exportable",
+      "failZh": "Stocky 已于 2026-08-31 关停（2 月 2 日已从应用商店下架，无法重装）。官方迁移说明写明：关停后至少还有 90 天只读访问用于导出数据，按此推算窗口大约落在 11 月底；历史采购单不能导入 Shopify，供应商也无法从 Stocky 导出。社区商家在窗口临近时核对文件后发现：采购单导出是唯一能把商品、供应商、价格和日期绑在一起的文件；供应商联系方式、付款条款、MOQ 提醒、备注、按供应商或商品覆盖的交期、以及预期到货日，都不在任何导出里。若只导出产品、或等到窗口关闭后再想补导，这些记录可能再也拿不回来。官方还写 Stocky API 已在 8 月 31 日停止。",
+      "failEn": "Stocky shut down on 2026-08-31 (it was delisted from the App Store on February 2, so it cannot be reinstalled). Shopify’s migration guide says merchants keep read-only access to export data for at least 90 days after that date, which lands around late November. It also states that historical Stocky purchase orders cannot be imported into Shopify, and that suppliers cannot be exported from Stocky. Merchants checking their files before the window closes reported that the purchase-order export is the only file that ties a product to a supplier, a price, and a date. Supplier contacts, payment terms, MOQ reminders, notes, per-supplier or per-product lead-time overrides, and expected delivery dates were missing from every export they pulled. Exporting only products, or waiting until the window closes, can mean those records are gone. Shopify also says Stocky APIs stopped on August 31.",
+      "fixZh": "只读窗口还开着时立刻导出并留存：全部已完成采购单报告（CSV）、盘点历史、历史成本，以及调拨记录。先保留原始文件，另存副本再整理，避免表格软件把长变体 ID 或日期弄乱。用采购单导出重建供应商名单（每行带有供应商名），同时打开仍可访问的 Stocky 供应商页，手工抄下邮箱、电话、地址、付款条款、MOQ、备注、交期覆盖和未完成采购单的预期到货日。仍未完成的采购单，按剩余数量在 Shopify 或替代工具里重建；不要假设导入后仍是「进行中的订单」。历史采购单无法导入 Shopify，导出文件就是以后的审计底稿。",
+      "fixEn": "Export now, while read-only access remains: all completed purchase-order reports as CSVs, stocktake history, historical cost data, and transfers. Keep the original files untouched and clean a working copy—spreadsheet tools can mangle long variant IDs or dates. Rebuild the supplier list from the purchase-order export (each line names the supplier), and while Stocky still opens, manually copy supplier emails, phone numbers, addresses, payment terms, MOQs, notes, lead-time overrides, and expected dates on open orders. Recreate any still-open purchase orders in Shopify or a replacement app for remaining quantities only; an import generally preserves history, not live open orders. Historical POs cannot be imported into Shopify, so the exports are the audit copy you will keep.",
+      "platforms": [
+        "Shopify",
+        "Stocky"
+      ],
+      "severity": "high",
+      "date": "2026-08-31",
+      "tags": [
+        "stocky",
+        "inventory",
+        "purchase-orders",
+        "data-export",
+        "migration"
+      ]
+    },
     {
       "id": "pay-refund-currency-dkk-gbp",
       "demo": false,

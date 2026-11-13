@@ -1,8 +1,57 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-12",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, and 2026-11-12 (label verify over 24h, Stocky read-only window). demo=false = sourced.",
+  "generatedAt": "2026-11-13",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, and 2026-11-13 (GMC 500×500 image enforcement, GMC shipping currency mismatch). demo=false = sourced.",
   "fails": [
+    {
+      "id": "ads-gmc-image-500-2027",
+      "demo": false,
+      "category": "ads",
+      "titleZh": "GMC 将从 2027-01-31 起把商品图最低尺寸提到 500×500",
+      "titleEn": "Merchant Center will require 500×500 product images from January 31, 2027",
+      "failZh": "2026-11-12，Shopify Community 有人提醒：Google Merchant Center 将从 2027-01-31 起，把 image_link 与 additional_image_link 的最低分辨率统一提高到 500×500 像素（现行一般商品 100×100、服饰 250×250）。官方规格更新页（2026-04-14）写明将发出 “Image too small for upcoming enforcement” 告警，并可在 Needs attention 查看、下载受影响商品；官方「How to fix: Image too small」页写告警从 2026 年 7 月起出现，两页都以 2027-01-31 为强制执行日。到期后小于该尺寸的图片可能被拒，商品无法再出现在 Shopping 广告和免费商品信息中。官方也写明：部分小于 500×500 的图可能会被自动优化以暂过关，并标 “Image resolution optimizations applied”，但不能当作长期方案。把小图简单拉大可以通过尺寸检查，但画质发糊，官方不建议；商品主体建议占画面约 75%–90%。",
+      "failEn": "On 2026-11-12, a Shopify Community post flagged that Google Merchant Center will raise the minimum for image_link and additional_image_link to 500×500 pixels on 2027-01-31, up from today’s 100×100 (250×250 for apparel). Google’s April 14, 2026 specification-update page says Merchant Center will show the warning “Image too small for upcoming enforcement,” and that affected products can be reviewed and downloaded from Needs attention. The “How to fix: Image too small” page dates those warnings from July 2026; both official pages set enforcement at January 31, 2027. After that date, undersized images can be disapproved and the products can drop out of Shopping ads and free listings. Google also says it may serve an optimized version of some sub-500×500 images and mark them “Image resolution optimizations applied,” which is not a lasting substitute for a real larger photo. Stretching a small file can pass the pixel check but looks soft; Google advises against upscaling and suggests the product fill about 75–90% of the frame.",
+      "fixZh": "现在就在 Merchant Center 的 Products → Needs attention 里查告警，并按官方说明点 View history，找橙色的 “Image too small for upcoming enforcement” 和 “Image resolution optimizations applied”；可用 View fix → Download impacted products 下载名单。回到 Shopify，用更大的原图替换主图和附加图，官方建议 1500×1500 或以上，不要把缩略图拉升。没有更大原图就重拍。改完后等 24–72 小时再看 Needs attention，不必整份 feed 重新提交。Shopify 的 Google & YouTube 应用里也可用 Google 文档提到的 Product Studio 提高分辨率或去背景，但仍应优先使用清晰原图。YouTube Shopping 在电视上投放本身就要求至少 500×500，可一并检查。",
+      "fixEn": "In Merchant Center, open Products → Needs attention and, as Google documents, use View history to find the orange warnings “Image too small for upcoming enforcement” and “Image resolution optimizations applied.” Download the list with View fix → Download impacted products. In Shopify, replace the main and additional images with larger originals—Google recommends 1500×1500 or bigger—and do not upscale a thumbnail. If no larger original exists, reshoot. After you replace the files, Needs attention usually updates in 24–72 hours; you do not need to resubmit the whole feed. The Google & YouTube app in Shopify also exposes Product Studio, which Google’s help page says can increase resolution or remove backgrounds, but a sharp original is still the better fix. YouTube Shopping ads already need 500×500 to serve on TV, so check those creatives at the same time.",
+      "platforms": [
+        "Shopify",
+        "Google Merchant Center"
+      ],
+      "severity": "medium",
+      "date": "2026-11-12",
+      "tags": [
+        "google-merchant-center",
+        "product-images",
+        "shopping-ads",
+        "image-size",
+        "gmc-enforcement"
+      ]
+    },
+    {
+      "id": "ads-gmc-ship-currency-mismatch",
+      "demo": false,
+      "category": "ads",
+      "titleZh": "多市场运费币种和商品价不一致，GMC 把美国商品打成 Limited",
+      "titleEn": "GMC marks US products Limited when shipping currency doesn’t match",
+      "failZh": "2026-11-07，一名商家在 Shopify Community 报告：店铺本币是澳元（AUD），美国市场商品价是美元（USD，独立子域），澳洲 Shopping 广告正常，但 Merchant Center 出现 “Mismatched currency in shipping information. Limits visibility in United States”，美国商品全部变成 Limited。Shopify 里运费按澳元设置；她在 GMC 改运费会被 Google & YouTube 应用同步覆盖。她随后在 Shopify 建了仅覆盖美国、以美元计价的运费区，并表示已把美国从旧分区移除，GMC 同步了变更，商品却仍是 Limited。社区指出：自动同步可能仍挂着旧的澳元运费服务。Shopify 官方文档写明：自动导入只同步 General shipping profile 的费率，自定义运费资料无法自动同步；目标市场国家必须有对应运费区；不兼容时要把运费改为在 Merchant Center 手工设置。当日她反馈：把 GMC 里的运费币种改成与店铺本币一致的 AUD 后商品获批，美国 Shopping 广告开始有曝光；她使用的是 Shopify 原生多币种，没有第三方货币应用，但她自己也不理解「商品价是 USD、运费却改成 AUD」为何有效。另有回复提醒：该应用此前会覆盖 GMC 手工修改，过几天要再检查设置和 Limited 状态。",
+      "failEn": "On 2026-11-07, a merchant posted on the Shopify Community that their store currency was AUD and the US market priced products in USD on a separate subdomain. Australia Shopping ads were fine, but Merchant Center showed “Mismatched currency in shipping information. Limits visibility in United States,” and all US products went Limited. Shipping rates in Shopify were set in AUD; edits made in GMC were overwritten by the Google & YouTube app sync. The merchant then created a US-only shipping zone with USD rates and said the US had been removed from the old zone. GMC synced the change, but the products stayed Limited. Replies noted that an older AUD shipping service can remain attached in Merchant Center. Shopify’s own docs say automatic import syncs rates only from the General shipping profile—custom shipping profiles do not sync automatically—you need a shipping zone for the target-market country, and if the setup is incompatible you should switch to manual shipping setup in Merchant Center. Later that day the merchant reported that changing the GMC shipping currency to AUD, matching the store currency, approved the products and US Shopping ads started getting impressions. They used Shopify’s native currency conversion, not a third-party app, and said they did not understand why USD product prices with AUD shipping worked. Another reply warned that the app had overwritten GMC edits before, so the settings and Limited status should be checked again after a few days.",
+      "fixZh": "先不要只在 Merchant Center 里改运费。打开 Sales channels → Google & YouTube，在 Shipping settings 查看当前是「Automatically import shipping settings」还是「Manually set up shipping settings in Google Merchant Center」（官方设置页写明这两项）。若走自动同步：只把美国费率做进 General shipping profile（自定义 profile 不会被自动同步），为美国建美元运费区，并把美国从旧的本币分区里去掉；保存后再到 GMC 的 Settings → Shipping，检查美国名下还挂着几条运费服务、各是什么币种，删掉或关掉残留的错误币种服务，等下一次同步。若自动导入仍把错误币种推回去，按官方说明改成在 Merchant Center 手工维护美国的美元运费。该商家后来把 GMC 运费币种改成店铺本币 AUD 后商品获批、广告恢复曝光，但这与「同一国家商品价与运费币种应一致」的常见要求并不吻合，也不能当成普遍规则，且自动同步可能再次覆盖；改完后过几天复查 Limited 状态和运费服务是否被改回去。同时核对 Shopify Markets 与 Google & YouTube 应用里美国市场的币种设置。",
+      "fixEn": "Don’t edit shipping only in Merchant Center. In Sales channels → Google & YouTube, open Shipping settings and see whether it is set to “Automatically import shipping settings” or “Manually set up shipping settings in Google Merchant Center,” the two options Shopify documents. If you stay on automatic import, put the US rates in the General shipping profile (custom profiles do not sync automatically), create a USD zone for the United States, and remove the US from older store-currency zones. After you save, in GMC go to Settings → Shipping and check how many services still apply to the US and in which currency; remove or turn off leftover services in the wrong currency, then wait for the next sync. If automatic import keeps pushing the wrong currency, switch to manual setup in Merchant Center, as Shopify documents, and maintain a USD shipping service for the US there. This merchant later got products approved and US ads serving by changing the GMC shipping currency to the store currency (AUD). That does not match the usual “product price and shipping currency should agree for the same country” advice, is not a general rule, and the app may overwrite the edit; recheck Limited status and the shipping services after a few days. Also review the US market currency in Shopify Markets and in the Google & YouTube app.",
+      "platforms": [
+        "Shopify",
+        "Google Merchant Center",
+        "Google & YouTube"
+      ],
+      "severity": "high",
+      "date": "2026-11-07",
+      "tags": [
+        "google-merchant-center",
+        "shipping-currency",
+        "markets",
+        "google-youtube-app",
+        "shopping-ads"
+      ]
+    },
     {
       "id": "ship-label-verify-over-24h",
       "demo": false,

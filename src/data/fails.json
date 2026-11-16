@@ -1,8 +1,56 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-13",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, and 2026-11-13 (GMC 500×500 image enforcement, GMC shipping currency mismatch). demo=false = sourced.",
+  "generatedAt": "2026-11-16",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, 2026-11-13, and 2026-11-16 (Klarna dispute deadline after POD, 5% chargeback-rate payout hold with unshipped orders). demo=false = sourced.",
   "fails": [
+    {
+      "id": "pay-klarna-dispute-deadline-pod",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "Klarna 争议逾期后无法补交签收照，败诉还收手续费",
+      "titleEn": "Missed Klarna dispute deadline: POD photo rejected, fee kept",
+      "failZh": "2026-11-15，一名欧盟商家在 Shopify Community 报告：UPS 运单显示已投门口并带投递照片，顾客仍以 “credit not processed”（款项未入账）向 Klarna 发起争议，且从未申请或寄回退货。商家未能在截止日期前提交证据，争议败诉。Shopify 客服确认无法再复议、无法把签收证明转交给 Klarna，争议手续费 15 欧元不可退。商家还称 Klarna 是通过 “Managed payment methods”（托管支付方式）加入结账的，争议流程与卡单拒付不同，事先没有被清楚告知。官方 Klarna 文档写明：通过 Shopify Payments 的 Klarna 争议走 Klarna 自己的流程，结果由 Klarna 判定；若开启了托管支付方式，Klarna「可能会自动为你开通」。卡单拒付文档则写截止日期通常为提出后 7 到 21 天，点击 “Submit now” 后不能再改证据，过截止后「不能再补交，没有例外」。该商家的签收照因此无法补进已关闭的 Klarna 争议。",
+      "failEn": "On 2026-11-15, an EU merchant posted on the Shopify Community that UPS tracking showed the parcel delivered at the front door with a delivery photo, yet the customer opened a Klarna dispute claiming “credit not processed,” and no return was ever requested or received. The merchant missed the evidence deadline and lost the dispute. Shopify Support confirmed there was no review, no escalation, no way to forward the proof of delivery to Klarna, and that the €15 chargeback fee was non-refundable. The merchant also said Klarna had been added at checkout through “Managed payment methods,” and that its dispute process differed from card chargebacks without a clear warning. Shopify’s Klarna help page says disputes on Klarna payments made through Shopify Payments follow Klarna’s own process and Klarna decides the outcome, and that if managed payment methods are on, Klarna “might be activated for you automatically.” Shopify’s card-chargeback docs say the due date is usually 7 to 21 days after the dispute is filed, that you cannot edit evidence after you click “Submit now,” and that after the deadline “you can't submit any further evidence. There are no exceptions.” In this case the delivery photo could not be added to the already-closed Klarna dispute.",
+      "fixZh": "把 Klarna 争议当成比卡单更短、更不可补的流程来盯。官方写明：改后台联系邮箱并不会自动同步到 Klarna 的争议通知，要改收件地址必须联系 Shopify 支持；在 Settings → Payments 里确认托管支付方式是否已自动打开 Klarna，不打算提供的店铺应关掉。争议一到，先看后台或邮件里的截止日期，凑齐运单号、投递照片、结账时展示的退款政策，以及「从未收到退货申请」的说明再提交；官方警告点了 “Submit now” 就不能再改，所以没齐证据不要提前交。已经逾期且客服确认无法复议的，不要指望再把签收照转给 Klarna，也别在争议开始后对同一笔再退一次款（官方卡单文档写明流程启动后不能再通过 Shopify 退款，否则可能重复赔付）。其他仍开着 Klarna 的店铺，用同样清单预演一单证据包，避免再踩同一期限。",
+      "fixEn": "Treat Klarna disputes as a tighter, less reversible process than card chargebacks. Shopify documents that changing the admin contact email does not update the address Klarna uses for dispute notices—you must contact Shopify Support to change it—and that with managed payment methods on, Klarna “might be activated for you automatically,” so check Settings → Payments on every store and turn it off where you do not want it. As soon as a dispute arrives, note the deadline in the admin or email, then submit tracking, the delivery photo, the refund policy shown at checkout, and a line that no return was requested, in one package. The official chargeback docs warn that after you click “Submit now” you cannot edit evidence, so do not submit early if the proof is still incomplete. Once the deadline has passed and Support has said there is no review, do not expect to forward a delivery photo to Klarna, and do not refund the same order again after the dispute has started (Shopify’s card-chargeback docs say you cannot refund through Shopify once that process has begun, which can pay the customer twice). On any other store that still offers Klarna, rehearse the same evidence pack so the next deadline is not missed.",
+      "platforms": [
+        "Shopify",
+        "Klarna"
+      ],
+      "severity": "high",
+      "date": "2026-11-15",
+      "tags": [
+        "klarna",
+        "chargeback",
+        "dispute-deadline",
+        "proof-of-delivery",
+        "managed-payment-methods"
+      ]
+    },
+    {
+      "id": "pay-cb-rate-hold-unshipped",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "拒付率约 5% 触发打款冻结，50 单已付款却没钱发货",
+      "titleEn": "~5% chargeback rate holds payouts while 50 paid orders sit unshipped",
+      "failZh": "2026-11-15，一名商家在 Shopify Community 报告：Shopify Payments 因拒付率约 5% 冻结打款。手头约 50 笔已付款订单准备发货，但进货已用尽自有资金，打款被扣后付不起运费，只能等 Merchant Trust 回复。社区指出：官方用滚动 90 天计算拒付率，可在 Settings → Payments → Chargeback monitoring，以及 Analytics → Reports 的 “Rolling 90-day chargeback rate (NDRP)” 查看；顾客发起的每笔争议都计入，赢了也算。官方 NDRP 文档写明：过去 90 天含 NDRP 的拒付率达到或超过 1.5% 可能被自动纳入网络争议解决计划，并对打款加收 10% 准备金；若 90 天拒付率在首次准备金到期后仍高于 1%，可能再加准备金或暂停打款。约 5% 已远超该门槛。已付款却未发货的 50 单，每天都在增加 “未收到货” 争议的风险，会把比率再推高。",
+      "failEn": "On 2026-11-15, a merchant posted on the Shopify Community that Shopify Payments had held their payouts after the chargeback rate hit about 5%. They had roughly 50 paid orders ready to ship, but had already spent their savings on inventory, so with payouts frozen they could not cover postage and were waiting on the Merchant Trust team. Community replies pointed to Shopify’s rolling 90-day rate, visible in Settings → Payments → Chargeback monitoring and in Analytics → Reports under “Rolling 90-day chargeback rate (NDRP),” and noted that every dispute a customer opens counts, including ones the merchant wins. Shopify’s NDRP help page says merchants with an NDRP-inclusive chargeback rate of 1.5% or higher over the last 90 days can be enrolled automatically, with a 10% reserve on Shopify Payments payouts, and that if the 90-day rate stays above 1% after the first reserve expires, further reserves or payout holds may be applied. A rate around 5% is well above that threshold. The 50 paid but unshipped orders raise the odds of “item not received” disputes, which would push the rate higher still.",
+      "fixZh": "先处理那 50 单，再谈放款。官方降低拒付率的建议包括：发货前审查高风险订单、尽量使用运单和妥投证明、延误时主动通知顾客、把账单描述改成顾客认得的店名，并在截止日期前提交争议证据。社区补充：当天就给这 50 位顾客写信，给出可兑现的发货日，不愿等的立刻取消并全额退款——你主动退款不是拒付，争议才是；有运费的先发最早的单，履约时在 Shopify 填入运单号。按原因把最近争议分组（未收到货 / 欺诈 / 描述不符），只把 Trust 邮件要的材料回在同一线程：原因拆分、已发货运单与签收、以及拒付率升高之后具体改了什么（日期，不要只写计划）。官方账户冻结页写明：最快的解决办法是按要求补齐资料，并直接回复 Shopify 发给店主的邮件。不要为了绕开冻结另开新店或换通道，也不要在未改变风控的情况下按原节奏继续接单。比率只会随着旧争议滚出 90 天窗口、且新单保持干净才会下降；官方没有公布「连续干净多少天就一定解冻」。",
+      "fixEn": "Work the 50 orders first, then the hold. Shopify’s own chargeback-monitoring page tells you to review high-risk orders before fulfillment, use tracking and delivery confirmation, tell customers about delays, set billing-statement text they will recognize, and submit evidence before the deadline. Community advice on this thread: email all 50 customers today with an honest ship date, and cancel and refund in full anyone who would rather not wait—a refund you issue is not a chargeback; a dispute is. If you can pay postage, ship the oldest orders first and add the tracking number when you fulfill in Shopify. Group recent disputes by reason (not received, fraud, not as described) and reply in the same Merchant Trust email thread with exactly what they asked for: that breakdown, tracking and delivery proof for shipped orders, and what you changed after the rate spiked, with dates, not plans. Shopify’s account-holds page says the fastest way to resolve a hold is to provide any requested information and reply directly to the email sent to the store owner. Do not open a new store or switch processors to route around the hold, and do not keep taking orders at the same pace without those fixes. The rate falls only as old disputes leave the 90-day window and new orders stay clean; Shopify does not publish a fixed number of clean days after which a hold must lift.",
+      "platforms": [
+        "Shopify",
+        "Shopify Payments"
+      ],
+      "severity": "high",
+      "date": "2026-11-15",
+      "tags": [
+        "chargeback-rate",
+        "payout-hold",
+        "merchant-trust",
+        "ndrp",
+        "unshipped-orders"
+      ]
+    },
     {
       "id": "ads-gmc-image-500-2027",
       "demo": false,

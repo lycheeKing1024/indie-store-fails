@@ -1,8 +1,57 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-16",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, 2026-11-13, and 2026-11-16 (Klarna dispute deadline after POD, 5% chargeback-rate payout hold with unshipped orders). demo=false = sourced.",
+  "generatedAt": "2026-11-17",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, 2026-11-13, 2026-11-16, and 2026-11-17 (international Flat Rate Envelope 4 lb cap, 3PL DDP not collected at checkout). demo=false = sourced.",
   "fails": [
+    {
+      "id": "ship-intl-flat-rate-envelope-4lb",
+      "demo": false,
+      "category": "shipping",
+      "titleZh": "国内 Flat Rate 信封寄海外超 4 磅，面单直接报错",
+      "titleEn": "Domestic Flat Rate Envelope fails abroad over the 4 lb cap",
+      "failZh": "2026-11-16，一名商家在 Shopify Community 报告：俱乐部志愿者为海外订单购买面单时反复失败，报错 “To use a service, label details should meet destination, weight and size requirements.”（要使用某项服务，面单详情须满足目的地、重量和尺寸要求）。除寄往意大利外，东欧和亚洲目的地也遇到过。他们一直用 Priority Mail Flat Rate Envelope（优先邮件统一费率信封）寄宣传印刷品，因为在美国国内好用。社区指出：该信封在国内可寄到 70 磅，但国际件会变成 Priority Mail International Flat Rate Envelope，上限只有 4 磅，印刷品很容易超重。USPS 官方 Priority Mail International 页和 IMM 231.211 / 231.212 写明：国际统一费率信封和小盒上限 4 磅，中号和大号统一费率盒上限 20 磅；按重量计费的普通件可达 70 磅（部分国家更低）。Shopify「货件包装与重量」说明则概括为：通过 USPS 使用统一费率承运包装时，国内限重 70 磅、国际限重 4 磅。对中号/大号盒，应以 USPS 官方的 20 磅为准。",
+      "failEn": "On 2026-11-16, a merchant posted on the Shopify Community that a volunteer fulfilling club orders kept failing to buy overseas shipping labels, with the error “To use a service, label details should meet destination, weight and size requirements.” It happened on a shipment to Italy and had also been seen on orders to Eastern Europe and Asia. They were using a Priority Mail Flat Rate Envelope, which works well for their literature inside the United States. Community replies pointed out that the same envelope can take up to 70 lb domestically, but abroad it becomes a Priority Mail International Flat Rate Envelope with a 4 lb cap—and printed material adds up fast. USPS’s Priority Mail International page and IMM 231.211 / 231.212 state that Flat Rate Envelopes and Small Flat Rate Boxes are limited to 4 lb internationally, Medium and Large Flat Rate Boxes to 20 lb, and ordinary weight-based Priority Mail International parcels to 70 lb, with some countries lower. Shopify’s packaging-and-weights help page summarizes USPS flat-rate carrier packaging as 70 lb domestic and 4 lb international; for medium and large boxes, follow the USPS 20 lb official limit.",
+      "fixZh": "在面单页先看合计重量（商品重量加包装重量）。若选的是统一费率信封且超过 4 磅，不要再选国内的 Priority Mail，应改用 Priority Mail International；超重则改用中号统一费率盒（USPS 官方国际限重 20 磅），或按信封真实尺寸建自定义包装，走按重量计费的 PMI，印刷品往往更便宜，也可比较 First-Class Package International。同时核对：Settings → Shipping and delivery 里的默认包装是否过大（国际服务尺寸限制更严）；每个商品保存的重量是否为 0 或虚高（一件填错就可能把合计顶过 4 磅）；海关每一行是否都有描述、价值和重量（空行或重量为 0 会让可选服务消失）；包装类型与服务是否匹配。社区还提醒：国外地址不完整或写 PO Box，也可能直接排除承运商。",
+      "fixEn": "On the label page, first check the total weight—product weights plus the package weight. If you are using a Flat Rate Envelope and the total is over 4 lb, do not keep selecting domestic Priority Mail; choose Priority Mail International instead. Over the cap, switch to a Medium Flat Rate Box (USPS’s official international limit is 20 lb) or create a custom package with the envelope’s real dimensions and use weight-based PMI, which is often cheaper for printed matter; also compare First-Class Package International. Also check that the default package under Settings → Shipping and delivery is not oversized (international services have tighter size limits), that no product is saved at 0 or an inflated weight (one bad line can push the total over 4 lb), that every customs line has a description, value, and weight (a blank or zero-weight line can drop the service), and that the package type matches the international service. Community replies also noted that a PO Box or an incomplete overseas address can rule out a carrier.",
+      "platforms": [
+        "Shopify Shipping",
+        "USPS"
+      ],
+      "severity": "medium",
+      "date": "2026-11-16",
+      "tags": [
+        "shipping-labels",
+        "usps",
+        "flat-rate",
+        "international",
+        "priority-mail-international"
+      ]
+    },
+    {
+      "id": "ship-3pl-ddp-not-collected",
+      "demo": false,
+      "category": "shipping",
+      "titleZh": "3PL 自动走 DDP，结账没收关税，差额由商家垫",
+      "titleEn": "3PL ships DDP but checkout didn’t collect duties",
+      "failZh": "2026-11-16，一名刚换 3PL 的商家在 Shopify Community 提问：国际运费是在 Shopify 里设置的，顾客只付店面显示的运费；3PL 称订单进入后会自动按 DDP（Delivered Duty Paid，完税后交货）处理。商家担心关税和进口税若只在发货后才由 3PL 代缴，自己会垫付。社区回复明确：Shopify 不会自动代收关税，除非开启关税与进口税代收，并为每个 SKU 填写 HS 编码和原产国；否则 3PL 会在发货后把关税和经纪费记到商家账单。官方「在结账收取国际关税和进口税」页要求：使用支持 DDP 面单的承运商、不使用 Shopify Fulfillment Network、商品需有 HS 编码；并警告缺少原产国或 HS 编码错误时，顾客可能在收货时被再收一笔。设置入口在 Settings → Taxes and duties，也可按市场在 Markets 里配置。开启后，即便估算出的关税为 0，一般仍会按单收取计算手续费（官方写明 2025-02-02 起临时降至 0.5%；非临时费率为以 Shopify Payments 为主要网关时 0.85%、其他网关 1.5%）。",
+      "failEn": "On 2026-11-16, a merchant who had just switched 3PLs asked on the Shopify Community how DDP (Delivered Duty Paid) works with Shopify checkout. International rates were set in Shopify, so customers only paid the shipping shown at checkout, while the 3PL said it would handle DDP automatically once the order arrived. The merchant was concerned that if duties and import taxes were applied only after checkout, the store would absorb them. Community replies were clear: Shopify does not collect duties automatically unless you turn on duties and import-tax collection and fill in an HS code and country of origin on every SKU; otherwise the 3PL bills those DDP duties and any brokerage fees back on its invoice after shipping. Shopify’s “Collecting international duties and import taxes at checkout” page requires a carrier that supports DDP labels, no Shopify Fulfillment Network, and HS codes on products, and it warns that a missing country of origin or an incorrect HS code can lead to extra duties being charged to the customer on delivery. Setup is under Settings → Taxes and duties, and can also be configured per market in Markets. Once collection is on, a calculation fee generally applies even when the estimated duty is zero (Shopify says the fee was temporarily lowered to 0.5% from February 2, 2025; the non-temporary rates are 0.85% when Shopify Payments is the primary gateway and 1.5% with other gateways).",
+      "fixZh": "先向 3PL 要落地费率表（关税转嫁加上 DDP 管理费），对照 Shopify 结账当前到底收了什么，再决定是否开启代收。要在结账向顾客收取：到 Settings → Taxes and duties 点 Set up，确认承运商和 3PL 集成支持 DDP 面单，勾选要代收的国家/地区，并为每个 SKU 补齐 HS 编码和原产国（可在商品页 Shipping、批量编辑或关税 CSV 里填写）。官方也允许用第三方应用计算关税。不要把「3PL 自动 DDP」理解成结账已经向顾客收过税；在费率对齐之前，那些费用会记在你的 3PL 账单上。官方还提醒：结账里的关税是估算，海关实收可能不同，先把不准的商品信息修好。",
+      "fixEn": "Ask your 3PL for its landed rate card (duty pass-through plus any DDP admin fee) and compare it with what Shopify checkout currently collects before you change rates. To charge customers at checkout, go to Settings → Taxes and duties, click Set up, confirm that your carriers and 3PL integrations support DDP labels, select the countries or regions to collect in, and add an HS code and country of origin on every SKU (from the product page’s Shipping section, the bulk editor, or the duties CSV). Shopify also allows a third-party app to calculate duties if you do not meet the built-in requirements. Do not treat “the 3PL handles DDP automatically” as proof that checkout already collected those amounts; until the rates line up, the duties land on your 3PL invoice. Shopify also notes that checkout duties are estimates and that actual customs charges can differ, so fix inaccurate product data first.",
+      "platforms": [
+        "Shopify",
+        "Shopify Markets"
+      ],
+      "severity": "medium",
+      "date": "2026-11-16",
+      "tags": [
+        "ddp",
+        "duties",
+        "3pl",
+        "markets",
+        "hs-code",
+        "checkout"
+      ]
+    },
     {
       "id": "pay-klarna-dispute-deadline-pod",
       "demo": false,

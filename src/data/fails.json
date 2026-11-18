@@ -1,8 +1,80 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-17",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, 2026-11-13, 2026-11-16, and 2026-11-17 (international Flat Rate Envelope 4 lb cap, 3PL DDP not collected at checkout). demo=false = sourced.",
+  "generatedAt": "2026-11-18",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, 2026-11-13, 2026-11-16, 2026-11-17, and 2026-11-18 (Affirm captured with no settlement, local pickup ready time ignores holiday closures, Google & YouTube auto-import only syncs the General shipping profile). demo=false = sourced.",
   "fails": [
+    {
+      "id": "pay-affirm-captured-no-payout",
+      "demo": false,
+      "category": "payments",
+      "titleZh": "Shopify 显示 Affirm 已捕获，近两个月却没收到结算款",
+      "titleEn": "Affirm shows Captured in Shopify, but no settlement for nearly two months",
+      "failZh": "2026-11-17，商家 FrogMan25 在 Shopify Community 报告：多笔通过 Affirm 的订单在 Shopify 里显示已成功 Captured（已捕获），但结算记录里没有这些交易，银行也一直没到账。他们联系过 Shopify，也通过 Affirm 网站提交过请求，将近两个月仍无回复。后续确认走的是 Affirm Merchant Portal 的直连账户，门户里没有退款、争议或负余额；但每次新开工单，大约两小时内就会被标成 Solved，问题并未解决。这和 Shop Pay Installments 不是同一条打款路径。Affirm 官方开发者文档写明：交易变为 captured 后，会在 2–3 个工作日内以 ACH 把货款打到已登记的银行账户，官方联系方式是 merchanthelp@affirm.com 或页面底部的商家支持组件。Shopify「Shop Pay Installments 如何收款」则说明：捕获后 1–3 个工作日随 Shopify Payments 打款，可在 Finance → Payouts 里按支付方式筛选「Shop Pay Installments」。官方还写明，若打款日赶上周末或假期，银行流水可能先显示 pending，到下一个工作日才入账。",
+      "failEn": "On 2026-11-17, merchant FrogMan25 reported on the Shopify Community that several Affirm orders showed as successfully Captured in Shopify, yet the transactions never appeared in settlement records and the funds never arrived in the bank. They had contacted Shopify and submitted requests through Affirm’s website, with no response for nearly two months. They later confirmed the store uses a direct Affirm Merchant Portal account, with no refunds, disputes, or negative balance there; each new Affirm support case was marked Solved within about two hours without fixing the payouts. This is not the same payout path as Shop Pay Installments. Affirm’s official developer docs say that after a transaction is captured, Affirm pays the merchant within 2–3 business days by ACH to the bank account on file, and list merchanthelp@affirm.com or the support widget at the bottom of the page as the merchant contact. Shopify’s “Getting paid for orders placed using Shop Pay Installments” page says those orders are paid out within 1–3 business days with Shopify Payments payouts, and can be filtered on Finance → Payouts by the Shop Pay Installments payment method. Shopify also notes that a payout falling on a weekend or holiday may show as pending on the bank statement until the next business day.",
+      "fixZh": "先打开其中一笔订单的支付行，确认写的是 Affirm 还是 Shop Pay Installments。若是后者，钱走 Shopify Payments：到 Finance → Payouts 点 View transactions，按支付方式筛选「Shop Pay Installments」核对是否已打出；社区补充银行流水上可能显示为 “SHOPPAYINST AFRM”。若确认是直连 Affirm，捕获后仍远超官方所说的 2–3 个工作日不到账，应在 Merchant Portal 用支持组件或 merchanthelp@affirm.com 跟进，并在已被标成 Solved 的原工单里回复以重开历史，而不是再开一张新单。社区还建议检查门户首页是否有风险审查横幅及预计日期，以及 Settings 里的银行账户是否填写正确。在货款到账前，考虑先在结账关掉 Affirm，避免继续发货却没有对应回款。",
+      "fixEn": "Open one of the orders and check the payment line to see whether it says Affirm or Shop Pay Installments. If it is Shop Pay Installments, the money moves with Shopify Payments: go to Finance → Payouts, click View transactions, and filter by payment method → Shop Pay Installments to see whether the payout already went out. Community replies added that the bank statement may show “SHOPPAYINST AFRM”. If it is a direct Affirm account and captured payments are still far past the official 2–3 business day window, follow up in the Affirm Merchant Portal with the support widget or merchanthelp@affirm.com, and reply on a case already marked Solved so it reopens with its history, instead of opening a new one. Community replies also suggested checking the portal home page for a risk-review banner with dates, and confirming that the bank account under Settings is present and correct. Until the funds arrive, consider turning Affirm off at checkout so you are not shipping more orders with no payout behind them.",
+      "platforms": [
+        "Shopify",
+        "Affirm"
+      ],
+      "severity": "high",
+      "date": "2026-11-17",
+      "tags": [
+        "affirm",
+        "payout",
+        "settlement",
+        "shop-pay-installments",
+        "captured"
+      ]
+    },
+    {
+      "id": "ship-pickup-holiday-ready-time",
+      "demo": false,
+      "category": "shipping",
+      "titleZh": "假期关店时，到店自提「预计可取」时间仍按平时承诺",
+      "titleEn": "Local pickup ready times keep the usual promise through holiday closures",
+      "failZh": "2026-11-17，Shopify Community 有帖提醒：到店自提的「预计可取」时间，只来自每个地点的处理时长（Settings → Shipping and delivery → Pickup in store，点开地点后的 Expected pickup date）。发帖人说这是一份固定下拉列表，大约从一小时到五天或更长，结账时（以及支持该功能的主题商品页）会按此展示；设置页和帮助文档里找不到营业时间、歇业日或假期会自动改写这条承诺，所以「通常 2 小时可取」在感恩节早上仍会原样显示。Shopify 官方「为线上订单设置到店自提」页确实只要求在 Expected pickup date 中选择一个处理时间并展示给顾客，没有把营业时间或假期列为计算因素。这和运输的「预计送达日期」不同：官方手工送达日期说明里，履行时间按工作日计算，示例会跳过周末和法定假日。地点的自提说明会写入「可取货」邮件，甚至覆盖通用通知模板，但只在订单已准备好后才到达顾客。",
+      "failEn": "On 2026-11-17, a Shopify Community post warned that the local-pickup ready time comes only from each location’s processing time (Settings → Shipping and delivery → Pickup in store, then the location’s Expected pickup date). The author described that setting as a fixed drop-down, from about one hour up to five days or more, and said that is what customers see at checkout and, on themes that support it, on the product page. They could not find opening hours, closed days, or holidays in those settings or the help docs that would rewrite the promise, so a “usually ready in 2 hours” estimate would still appear on Thanksgiving morning. Shopify’s official “Setting up pickup in store for online orders” page does ask you to select a processing time under Expected pickup date and says that information is displayed to customers, but it does not mention opening hours or holidays as inputs. That differs from shipping’s estimated delivery dates: Shopify’s manual delivery-dates help page counts fulfillment time in business days and, in its example, skips weekends and statutory holidays. Location-specific pickup instructions do go into the ready-for-pickup email—and can override the general notification template—but they only reach the customer after the order is already marked ready.",
+      "fixZh": "假期前打开每个自提地点的 Expected pickup date，对照「最长歇业前一晚下的单」是否还成立。若不能兑现，可暂时改成更长的处理时间，或在该地点关掉到店自提，避免结账继续承诺。假期营业时间可写进该地点的自提说明，但只会出现在「可取货」邮件里，不能替代结账上的预计时间。官方和社区都没有提供可预约生效的改期，改完会一直保持到你改回去，建议在重新开门当天设日历提醒，把处理时间或自提开关恢复原状。这两种办法都不能让顾客自选取货日。",
+      "fixEn": "Before a holiday closure, open each pickup location’s Expected pickup date and ask whether it is still true for an order placed the evening before your longest shutdown. If it is not, temporarily switch it to a longer processing time, or turn pickup off at that location so checkout stops offering it. Holiday hours can go in that location’s pickup instructions, but they only appear in the ready-for-pickup email and will not replace the estimate shown at checkout. Neither official docs nor the community post describe a way to schedule the change, so whatever you change stays until you change it back; set a calendar reminder for the morning you reopen to restore the usual processing time or re-enable pickup. Neither lever lets a customer choose the day they will collect.",
+      "platforms": [
+        "Shopify"
+      ],
+      "severity": "medium",
+      "date": "2026-11-17",
+      "tags": [
+        "local-pickup",
+        "holidays",
+        "expected-pickup-date",
+        "checkout",
+        "bfcm"
+      ]
+    },
+    {
+      "id": "ads-gyt-general-profile-only",
+      "demo": false,
+      "category": "ads",
+      "titleZh": "Google & YouTube 自动同步只会推总运费配置，自定义配置被丢掉",
+      "titleEn": "Google & YouTube auto-import only syncs the General shipping profile",
+      "failZh": "2026-10-27，商家 Patricia_MacPherson 在 Shopify Community 报告：店铺商品都走自定义运费配置（custom shipping profiles），但 Google & YouTube 应用只会把总运费配置（General shipping profile）同步到 Google Merchant Center。她已在 Merchant Center 建好按标签区分的运费政策，并删掉了应用自动生成的 99 条「API shipping policies」（这些政策作用到全部商品），担心应用下次同步又把手工政策覆盖掉。该帖在 2026-11-17 仍有讨论。Shopify 官方「设置 Google & YouTube 渠道」排障写明：自动导入运费有限制，只有总运费配置里的费率能同步，自定义运费配置无法自动同步；若设置不兼容自动导入，应改为「在 Google Merchant Center 中手动设置运费」并直接在 Merchant Center 配置。官方要求页也给出了把 Shipping settings 切到手动的步骤。",
+      "failEn": "On 2026-10-27, merchant Patricia_MacPherson reported on the Shopify Community that all of her products use custom shipping profiles, but the Google & YouTube app was syncing only Shopify’s General shipping profile to Google Merchant Center. She had created label-based shipping policies in Merchant Center and deleted 99 app-created “API shipping policies,” which applied to every product, and wanted to keep product sync without the app overwriting those manual policies. The thread was still active on 2026-11-17. Shopify’s official “Set up the Google & YouTube channel” troubleshooting notes that automatic shipping import has limits: only rates from the General shipping profile can sync, and custom shipping profiles cannot sync automatically. If the setup is not compatible with automatic import, the help page says to choose “Manually set up shipping settings in Google Merchant Center” and configure rates there. The official requirements page also gives the steps for switching Shipping settings to manual.",
+      "fixZh": "在 Shopify 后台打开 Sales channels → Google & YouTube → Settings，找到 Shipping settings 点 Manage，改成「在 Google Merchant Center 中手动设置运费」。官方说明这样就不会再从 Shopify 自动导入运费，商品同步仍会继续；之后要在 Merchant Center 自己维护费率。社区提醒：若 Merchant Center 仍显示 “Shipping settings are being handled by Shopify” 且选项是灰的，需要在 Merchant Center 暂停由 Shopify 管理的运费设置，否则应用可能在下次同步时重新创建 API 政策，删掉也没用。改用按标签的政策时，确认商品 feed 里带有对应的 shipping_label；必要时在数据源里用属性规则做映射。社区还提醒：Shopping 广告会在价格下展示运费，若 Merchant Center 的标签费率低于结账实收，Google 常会在几天后以运费不符为由拒审，可先用最重的一件商品对一次结账和 Merchant Center 费率。",
+      "fixEn": "In the Shopify admin, open Sales channels → Google & YouTube → Settings, click Manage next to Shipping settings, and switch to “Manually set up shipping settings in Google Merchant Center.” Official help says that stops Shopify from importing rates automatically, while product sync keeps running; you then maintain rates in Merchant Center yourself. Community replies added that if Merchant Center still says “Shipping settings are being handled by Shopify” and the controls are greyed out, pause the Shopify-managed shipping setting there as well, or the app can recreate the API policies on the next sync even after you delete them. If you use label-based policies, confirm that the matching shipping_label actually reaches the product feed, mapping it with an attribute rule on the data source if needed. Community replies also noted that Shopping ads show the shipping cost under the price, and a label-based Merchant Center rate lower than what checkout charges can lead to a shipping-mismatch disapproval a few days later; a test checkout on your heaviest product, compared with its Merchant Center rate, catches that early.",
+      "platforms": [
+        "Shopify",
+        "Google Merchant Center",
+        "Google & YouTube"
+      ],
+      "severity": "medium",
+      "date": "2026-10-27",
+      "tags": [
+        "google-youtube",
+        "shipping-profile",
+        "merchant-center",
+        "shopping-ads",
+        "shipping-mismatch"
+      ]
+    },
     {
       "id": "ship-intl-flat-rate-envelope-4lb",
       "demo": false,

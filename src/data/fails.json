@@ -1,8 +1,83 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-18",
-  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, 2026-11-13, 2026-11-16, 2026-11-17, and 2026-11-18 (Affirm captured with no settlement, local pickup ready time ignores holiday closures, Google & YouTube auto-import only syncs the General shipping profile). demo=false = sourced.",
+  "generatedAt": "2026-11-19",
+  "note": "Seed demos plus verified public fails appended 2026-11-01, 2026-11-03, 2026-11-04, 2026-11-05, 2026-11-06, 2026-11-09, 2026-11-10, 2026-11-11, 2026-11-12, 2026-11-13, 2026-11-16, 2026-11-17, 2026-11-18, and 2026-11-19 (agentic storefronts on by default with auto-joined channels, Royal Mail 6×4 vs Brother QL-800, shared print paper size and blocked pop-ups). demo=false = sourced.",
   "fails": [
+    {
+      "id": "chk-agentic-default-on",
+      "demo": false,
+      "category": "checkout",
+      "titleZh": "符合条件的店会默认开通 AI 渠道，新产品渠道还会自动加入",
+      "titleEn": "Eligible stores are opted into agentic storefronts by default—and new AI channels join automatically",
+      "failZh": "2026-11-18，Shopify Community 提醒：对符合条件的店铺，Shopify 的 agentic storefronts（AI 店面）默认就是开着的，不必单独安装。商品可通过 Shopify Catalog 出现在 ChatGPT、Google AI Mode / Gemini、Microsoft Copilot 以及 Meta 等 AI 渠道里被发现甚至购买。官方写明：默认开启「Allow Shopify to manage for me」，意味着这些渠道可以读取 Catalog 做商品发现；在适用的渠道上「直接结账」也是开的；而且以后新加入的 AI 渠道会自动加上。资格取决于商品是否符合 Shopify Catalog，以及 Settings → Policies 里是否已填写服务条款、隐私政策和退换货政策；各渠道还有售卖国家等额外要求。ChatGPT 目前主要是发现，再把顾客送回你的在线结账（应用内浏览器或新标签页）；Google、Copilot、Meta 等在直接结账开启时可在渠道内完成购买。订单会在后台带渠道或推荐来源，但如果你从没打开过 Sales channels → Agentic，可能根本不知道这条通路已经在跑。这和「AI 代客下单绕过费用 App」不是同一件事：这里的坑是默认开通和自动加入，而不是附加费被跳过。",
+      "failEn": "On 2026-11-18, a Shopify Community post pointed out that Shopify’s agentic storefronts are active by default for eligible stores—you don’t need to install a channel. Products can be discovered and purchased inside ChatGPT, Google AI Mode and Gemini, Microsoft Copilot, and Meta AI surfaces via Shopify Catalog. Shopify’s docs say stores are opted in with “Allow Shopify to manage for me,” which means agentic storefronts can access Shopify Catalog, selling by direct checkout is active where applicable, and new agentic storefronts are added automatically as they join. Eligibility depends on Shopify Catalog and on completing Terms of service, Privacy policy, and Return and refund policy under Settings → Policies; each AI channel also has its own requirements, such as the countries you sell to. ChatGPT currently acts as a discovery referrer and sends customers to your online store checkout in an in-app browser or a new tab; Google, Copilot, and Meta can complete the purchase inside the channel when direct checkout is on. Those orders show channel or referrer attribution in admin, but if you have never opened Sales channels → Agentic you may not realize the path is already live. This is a different issue from fee apps being skipped on agentic checkout: the pitfall here is the default opt-in and auto-joining of new channels.",
+      "fixZh": "打开 Sales channels → Agentic，先核对实际开通了哪些 AI 渠道。若不想再让 Shopify 自动代管，关掉「Allow Shopify to manage for me」，再按渠道分别设置：只开 Catalog access，代理还能推荐商品，顾客会被带回你的官网结账；Catalog access 和 Direct checkout 都开，则可在该 AI 渠道内直接下单；两项都关，该渠道就不能再通过 Catalog 使用你的商品数据。官方说明：关掉 agentic 访问并不会把商品移出 Shopify Catalog，店内搜索和 Shop 不受影响；ChatGPT 渠道只有 Catalog access，没有单独的直接结账开关。同时确认三条政策已填，并检查商品标题、描述和变体写清楚（尤其是尺码、兼容性），因为 AI 主要读取这些标准字段。改完后，到订单里看渠道归属，确认符合预期。",
+      "fixEn": "Open Sales channels → Agentic and review which AI channels are actually on. If you don’t want Shopify to keep managing this for you, turn off “Allow Shopify to manage for me,” then set each channel: Catalog access only still lets agents recommend products and sends the buyer to your online store checkout; Catalog access plus Direct checkout lets them buy inside the AI channel; with neither setting on, the channel can no longer use your product data through Shopify Catalog. Shopify notes that removing agentic access does not remove products from Shopify Catalog, and it doesn’t affect Shop or storefront search; the ChatGPT storefront has only the Catalog access setting. Also confirm the three required policies are filled in, and keep titles, descriptions, and variant names explicit (especially sizing and compatibility), because agents mainly read those standard fields. After you change the settings, check new orders’ channel attribution to confirm the path matches what you intended.",
+      "platforms": [
+        "Shopify",
+        "ChatGPT",
+        "Google",
+        "Microsoft Copilot",
+        "Meta"
+      ],
+      "severity": "medium",
+      "date": "2026-11-18",
+      "tags": [
+        "agentic-storefronts",
+        "shopify-catalog",
+        "chatgpt",
+        "direct-checkout",
+        "default-opt-in"
+      ]
+    },
+    {
+      "id": "ship-rm-clickdrop-ql800-6x4",
+      "demo": false,
+      "category": "shipping",
+      "titleZh": "Royal Mail Click & Drop 默认 6×4 面单，Brother QL-800 打不下，缩小会糊条码",
+      "titleEn": "Royal Mail Click & Drop 6×4 labels won’t fit a Brother QL-800—and shrinking can break the barcode",
+      "failZh": "2026-11-17，商家 MikeDempsey 在 Shopify Community 提问：已开通 Royal Mail Click & Drop，页面提示面单尺寸是 6×4，但手头只有用来打产品标的 Brother QL-800，最大只能打 100×62 mm，以为缩小就能用。Royal Mail 官方 Click & Drop 帮助写明可选格式包括：A4 一体化面单+发货单、A4 分张面单+发货单（每页 1、2 或 4 张）、6×4 分张，以及 4×3 分张；6×4 和 4×3 需热敏/标签打印机，A4 可用普通家用或办公打印机。QL-800 的最大宽度是 62 mm，无论 6×4（约 152×102 mm）还是 4×3（约 102×76 mm）都比它更宽。社区提醒：把 6×4 PDF 压到 62 mm 宽的纸上，二维条码大约会缩小 40%，分拣口扫描可能失败。",
+      "failEn": "On 2026-11-17, merchant MikeDempsey asked on the Shopify Community how to use Royal Mail Click & Drop with a Brother QL-800 already used for product labels. Click & Drop prompted a 6×4 label, but the QL-800’s largest stock is 100×62 mm, and they hoped a smaller size would work. Royal Mail’s official Click & Drop guide lists A4 integrated label and despatch note, A4 separate label and despatch note (1, 2, or 4 labels per page), 6×4 separate, and 4×3 separate. 6×4 and 4×3 need a thermal or label printer; A4 can be printed on a regular home or office printer. The QL-800’s maximum width is 62 mm, so neither 6×4 (about 152×102 mm) nor 4×3 (about 102×76 mm) will fit. Community replies warned that shrinking a 6×4 PDF onto a 62 mm roll cuts the 2D barcode by nearly 40% and can fail sorting-office scanners.",
+      "fixZh": "不要把 6×4 面单缩小打到 QL-800 上。在 Click & Drop 打开 Settings → Label format，改成 A4、分张（Separate label & despatch note），并把 Labels per page 设为 4，用普通打印机输出。若必须继续用热敏 6×4，需要换能打 4 英寸宽的打印机（社区举例 Brother QL-1100 / QL-1110NWB，可用 101×152 mm 的 DK-1241 纸卷），QL-800 可继续打产品标。官方也提供 4×3 热敏格式，但 4 英寸宽度同样超出 QL-800，不能当作这台机器的替代方案。",
+      "fixEn": "Do not shrink a 6×4 label onto the QL-800. In Click & Drop, open Settings → Label format, choose A4 with the separate label and despatch note template, set Labels per page to 4, and print on a regular printer. If you need to keep printing 6×4 thermal labels, use a 4-inch-wide printer (community examples are the Brother QL-1100 or wireless QL-1110NWB with 101×152 mm DK-1241 rolls) and keep the QL-800 for product labels. Royal Mail also offers a 4×3 thermal format, but that is still 4 inches wide, so it is not a workaround for the QL-800.",
+      "platforms": [
+        "Shopify",
+        "Royal Mail Click & Drop",
+        "Brother"
+      ],
+      "severity": "medium",
+      "date": "2026-11-17",
+      "tags": [
+        "shipping-labels",
+        "royal-mail",
+        "click-and-drop",
+        "label-size",
+        "thermal-printer"
+      ]
+    },
+    {
+      "id": "ship-print-docs-shared-paper-size",
+      "demo": false,
+      "category": "shipping",
+      "titleZh": "打印面单和装箱单共用一个纸张尺寸，一次打不齐，拦截弹窗还会全打不出来",
+      "titleEn": "One shared paper size (and blocked pop-ups) breaks printing labels with packing slips",
+      "failZh": "2026-11-16，商家 Andreas_Zindel 在 Shopify Community 反馈：后台打印菜单改版后，热敏面单是 4×6，装箱单是 Letter，但一次只能按同一种纸张尺寸打印，原来大约两步就能把面单和装箱单一起打完，现在要反复切换，点击次数明显变多。官方「打印订单单据」说明目前仍写明：你选中的所有单据共用同一套打印设置，纸张尺寸可选 4×6（热敏）、8.5×11（Letter）或 A4；单据会在新浏览器标签页打开，若浏览器拦截了 Shopify 后台的弹出窗口，则一份都打不出来。有「Fulfill and ship」权限的账号会记住上次的单据和设置。社区里有人提到一种可为每种单据单独设纸张尺寸的新对话框，并称仍在逐步放量；但官方帮助页尚未这样写，该商家 11-18 的截图仍是顶部一个共用纸张尺寸，因此不能当成已经普遍可用。",
+      "failEn": "On 2026-11-16, merchant Andreas_Zindel reported on the Shopify Community that after a print-menu update they could no longer print 4×6 thermal shipping labels and letter-size packing slips in one pass. A job that used to take about two clicks now required switching paper size and many more clicks. Shopify’s “Printing order documents” help page still says print settings apply to every document you select, with a single paper size of 4×6 (thermal), 8.5×11 (Letter), or A4. Documents open in a new browser tab; if the browser blocks pop-ups for your Shopify admin, none of the documents print. Accounts with the Fulfill and ship permission reuse the documents and settings from the last print. A community reply described a newer dialog that can set a page size per document and said it is still rolling out; official help does not describe that behavior, and the merchant’s 2026-11-18 screenshot still showed one shared paper size at the top, so that version should not be treated as generally available.",
+      "fixZh": "先允许浏览器为 Shopify 后台弹出窗口，否则标签页被拦就会表现为“什么都没打印”。在官方仍是共用纸张尺寸的情况下，按打印机分两次打：先到 Orders → Shipping labels 选中已买单的面单，只勾选 Shipping labels，纸张设为 4×6（Thermal）；再单独把装箱单设为 Letter 或 A4 打印。有履约权限时，下次会沿用你刚用过的设置，所以两次打印之间要确认纸张尺寸没有串掉。社区的权宜办法是：用 Shopify 免费的 Order Printer 批量打 Letter/A4 装箱单，把原生「Print documents」固定在 4×6 只打面单。若你的对话框已经出现每种单据单独的纸张尺寸，再一次性勾选面单和装箱单并分别设 4×6 与 Letter。",
+      "fixEn": "Allow pop-ups for your Shopify admin first; a blocked tab looks like nothing printed. While official help still uses one paper size for the whole job, print in two passes: on Orders → Shipping labels, select purchased labels, enable only Shipping labels, and set the size to 4×6 (Thermal); then print packing slips separately at Letter or A4. Because Fulfill and ship accounts reuse the last settings, check the paper size between those two passes so it doesn’t stay on the wrong printer. A practical community workaround is to bulk-print letter/A4 packing slips with Shopify’s free Order Printer app and leave the native Print documents dialog locked to 4×6 for labels only. If your dialog already shows a paper size next to each document type, you can select both labels and slips and set 4×6 and Letter in one pass.",
+      "platforms": [
+        "Shopify"
+      ],
+      "severity": "medium",
+      "date": "2026-11-16",
+      "tags": [
+        "shipping-labels",
+        "packing-slips",
+        "print-documents",
+        "thermal-printer",
+        "fulfillment"
+      ]
+    },
     {
       "id": "pay-affirm-captured-no-payout",
       "demo": false,
